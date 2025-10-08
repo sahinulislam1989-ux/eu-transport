@@ -5,305 +5,284 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eastern University Transport — Dashboard</title>
 <style>
-  :root {
-    --bg: #f0f4f8;
-    --card: #ffffff;
-    --muted: #475569;
-    --accent: #0b5cff;
-    --accent2: #ff5722;
-  }
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: var(--bg);
-    color: #0b1220;
-  }
-  .container {
-    max-width: 980px;
-    margin: 18px auto;
-    padding: 12px;
-  }
-  header {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .logo {
-    width: 80px;
-    height: 80px;
-    border-radius: 12px;
-    background: var(--accent);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 24px;
-  }
-  h1 {
-    margin: 0;
-    font-size: 22px;
-    color: var(--accent2);
-  }
-  .card {
-    background: var(--card);
-    padding: 14px;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(2,6,23,0.06);
-    margin-bottom: 20px;
-  }
-  label {
-    display: block;
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  input, select, button, textarea {
-    font-size: 15px;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #e6eef6;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .grid {
-    display: grid;
-    gap: 12px;
-  }
-  .cols-3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .small {
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .chip {
-    display: inline-block;
-    padding: 6px 8px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-    color: #fff;
-    margin-right: 6px;
-    font-weight: bold;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  th, td {
-    padding: 8px;
-    border-bottom: 1px solid #f1f5f9;
-    text-align: left;
-  }
-  th {
-    background: var(--accent);
-    color: white;
-  }
-  .right {
-    text-align: right;
-  }
-  .btn {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 10px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  .btn.ghost {
-    background: transparent;
-    color: var(--accent);
-    border: 1px solid #dbeafe;
-  }
-  footer {
-    margin-top: 18px;
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .profile {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-top: 10px;
-  }
-  .profile img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    object-fit: cover;
-  }
+:root {
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --muted: #475569;
+  --accent: #0b5cff;
+  --accent2: #ff5722;
+  --approved: #28a745;
+  --rejected: #dc3545;
+  --pending: #ffc107;
+}
+body {
+  font-family: Arial,sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: #0b1220;
+}
+.container {
+  max-width: 980px;
+  margin: 18px auto;
+  padding: 12px;
+}
+header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 24px;
+}
+h1 { margin:0; font-size:22px; color: var(--accent2);}
+.card {
+  background: var(--card);
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+  margin-bottom: 20px;
+}
+label { display:block; font-size:13px; color: var(--muted); margin-bottom:6px;}
+input, select, button, textarea {
+  font-size:15px; padding:10px; border-radius:8px;
+  border:1px solid #e6eef6; width:100%; box-sizing:border-box;
+}
+.grid { display:grid; gap:12px; }
+.cols-3 { grid-template-columns: repeat(3,1fr); }
+.small { font-size:13px; color:var(--muted);}
+.chip {
+  display:inline-block;
+  padding:6px 8px;
+  border-radius:10px;
+  background: linear-gradient(135deg,#6a11cb,#2575fc);
+  color:#fff;
+  margin-right:6px;
+  font-weight:bold;
+}
+table { width:100%; border-collapse:collapse; margin-top:10px;}
+th, td { padding:8px; border-bottom:1px solid #f1f5f9; text-align:left; }
+th { background: var(--accent); color:white; }
+.btn {
+  background: var(--accent);
+  color:white;
+  border:none;
+  padding:10px 12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.btn.ghost {
+  background: transparent;
+  color: var(--accent);
+  border:1px solid #dbeafe;
+}
+footer { margin-top:18px; font-size:13px; color: var(--muted);}
+.profile { display:flex; gap:12px; align-items:center; margin-top:10px;}
+.profile img { width:60px; height:60px; border-radius:50%; border:2px solid #fff; object-fit:cover; }
+.status-label { font-weight:bold; padding:3px 6px; border-radius:6px; color:white;}
+.status-approved { background: var(--approved);}
+.status-rejected { background: var(--rejected);}
+.status-pending { background: var(--pending);}
 </style>
 </head>
 <body>
 <div class="container">
-  <!-- Header -->
-  <header>
-    <img src="eu.jpeg" alt="Eastern University" class="logo">
+
+<!-- Header -->
+<header>
+  <img src="eu.jpeg" alt="Eastern University" class="logo">
+  <div>
+    <h1>Eastern University Transport</h1>
+    <div class="small">Transport related information & dashboard</div>
+  </div>
+</header>
+
+<!-- Profiles -->
+<div class="card">
+  <h3>Transport Department Profiles</h3>
+  <div class="profile">
+    <img src="profile.jpeg" alt="Md. Sahihen">
     <div>
-      <h1>Eastern University Transport</h1>
-      <div class="small">Transport related information & dashboard</div>
-    </div>
-  </header>
-
-  <!-- Profile Section -->
-  <div class="card">
-    <h3>Transport Department Profiles</h3>
-    <div class="profile">
-      <img src="profile.jpeg" alt="Md. Sahihen">
-      <div>
-        <strong>Md. Sahihen</strong><br>
-        Assistant Director of Transport<br>
-        Mobile: 01962419405
-      </div>
-    </div>
-    <div class="profile">
-      <img src="mizen.jpeg" alt="Mizanur Rahman">
-      <div>
-        <strong>Mizanur Rahman</strong><br>
-        Senior In-charge of Transport<br>
-        Mobile: 01911090134
-      </div>
+      <strong>Md. Sahihen</strong><br>
+      Assistant Director of Transport<br>
+      Mobile: 01962419405
     </div>
   </div>
-
-  <!-- Routes & Drivers -->
-  <div class="card">
-    <h3>Configured Routes & Drivers</h3>
+  <div class="profile">
+    <img src="mizen.jpeg" alt="Mizanur Rahman">
     <div>
-      <span class="chip">Rampara</span>
-      <span class="chip">Dhanmondi</span>
-      <span class="chip">Malibagh</span>
-      <span class="chip">NarayanGanj</span>
-      <span class="chip">Chashara</span>
-      <span class="chip">Gulshan</span>
+      <strong>Mizanur Rahman</strong><br>
+      Senior In-charge of Transport<br>
+      Mobile: 01911090134
     </div>
-    <table id="driverTable">
-      <thead>
-        <tr><th>Route</th><th>Driver</th><th>Phone</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-    <button class="btn" id="downloadDrivers">ড্রাইভার লিস্ট PDF ডাউনলোড</button>
   </div>
-
-  <!-- Student / Faculty Check-in -->
-  <div class="card">
-    <h3>Student / Faculty Check-in</h3>
-    <div class="small">Submit between 5 PM – 10 PM</div>
-    <div class="grid cols-3">
-      <div><label>নাম (Name)</label><input id="stuName" placeholder="Full Name"></div>
-      <div><label>ID / Mobile</label><input id="stuId" placeholder="ID or Phone"></div>
-      <div><label>পদবী (Designation)</label><input id="stuRole" placeholder="Student / Faculty"></div>
-      <div><label>Pickup Location</label>
-        <select id="stuLocation"></select>
-      </div>
-      <div><label>&nbsp;</label>
-        <button class="btn" id="submitCheckin">Submit</button>
-      </div>
-    </div>
-    <div id="studentMsg" class="small" style="margin-top:8px;color:green"></div>
-  </div>
-
-  <!-- Attendance Approval -->
-  <div class="card">
-    <h3>Attendance Approval (Next Day)</h3>
-    <div id="approvalList"></div>
-  </div>
-
 </div>
 
+<!-- Routes & Drivers -->
+<div class="card">
+  <h3>Configured Routes & Drivers</h3>
+  <div>
+    <span class="chip">Rampara</span>
+    <span class="chip">Dhanmondi</span>
+    <span class="chip">Malibagh</span>
+    <span class="chip">NarayanGanj</span>
+    <span class="chip">Chashara</span>
+    <span class="chip">Gulshan</span>
+  </div>
+  <table id="driverTable">
+    <thead>
+      <tr><th>Route</th><th>Driver</th><th>Phone</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <button class="btn" id="downloadDrivers">ড্রাইভার লিস্ট PDF ডাউনলোড</button>
+</div>
+
+<!-- Student / Faculty Check-in -->
+<div class="card">
+  <h3>Student / Faculty Check-in</h3>
+  <div class="small">Submit between 5 PM – 10 PM</div>
+  <div class="grid cols-3">
+    <div><label>নাম (Name)</label><input id="stuName" placeholder="Full Name"></div>
+    <div><label>ID / Mobile</label><input id="stuId" placeholder="ID or Phone"></div>
+    <div><label>পদবী (Designation)</label><input id="stuRole" placeholder="Student / Faculty"></div>
+    <div><label>Pickup Location</label>
+      <select id="stuLocation"></select>
+    </div>
+    <div><label>&nbsp;</label>
+      <button class="btn" id="submitCheckin">Submit</button>
+    </div>
+  </div>
+  <div id="studentMsg" class="small" style="margin-top:8px;"></div>
+</div>
+
+<!-- Attendance / Approval -->
+<div class="card">
+  <h3>Attendance Approval</h3>
+  <div id="approvalList"></div>
+</div>
+
+<!-- Summary -->
+<div class="card">
+  <h3>Summary (Route-wise Passenger Count)</h3>
+  <div id="summaryList"></div>
+</div>
+
+</div>
 <footer class="small">Eastern University Transport Dashboard — Demo version</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-  const state = {
-    routes: ["Rampara","Dhanmondi","Malibagh","NarayanGanj","Chashara","Gulshan"],
-    drivers: [
-      {route:"Rampara",name:"Kabir Hossain",phone:"017XXXXXXXX"},
-      {route:"Dhanmondi",name:"Shahin Alam",phone:"018XXXXXXXX"},
-      {route:"Malibagh",name:"Mizanur Rahman",phone:"019XXXXXXXX"}
-    ],
-    records: [] 
-  };
+const state = {
+  routes:["Rampara","Dhanmondi","Malibagh","NarayanGanj","Chashara","Gulshan"],
+  drivers:[
+    {route:"Rampara",name:"Kabir Hossain",phone:"017XXXXXXXX"},
+    {route:"Dhanmondi",name:"Shahin Alam",phone:"018XXXXXXXX"},
+    {route:"Malibagh",name:"Mizanur Rahman",phone:"019XXXXXXXX"}
+  ],
+  records:[]
+};
 
-  // Populate driver table
-  function renderDriverTable(){
-    const tbody = document.querySelector("#driverTable tbody");
-    tbody.innerHTML="";
-    state.routes.forEach(r=>{
-      const d = state.drivers.find(d=>d.route===r);
-      const tr = document.createElement("tr");
-      tr.innerHTML=<td>${r}</td><td>${d?d.name:"Not Assigned"}</td><td>${d?d.phone:"-"}</td>;
-      tbody.appendChild(tr);
-    });
-  }
-  renderDriverTable();
-
-  // Populate route select
-  const stuLocation = document.getElementById("stuLocation");
+// Driver Table
+function renderDriverTable(){
+  const tbody=document.querySelector("#driverTable tbody");
+  tbody.innerHTML="";
   state.routes.forEach(r=>{
-    const o = document.createElement("option");
-    o.value = r;
-    o.textContent = r;
-    stuLocation.appendChild(o);
+    const d=state.drivers.find(d=>d.route===r);
+    const tr=document.createElement("tr");
+    tr.innerHTML=<td>${r}</td><td>${d?d.name:"Not Assigned"}</td><td>${d?d.phone:"-"}</td>;
+    tbody.appendChild(tr);
   });
+}
+renderDriverTable();
 
-  // Student check-in
-  document.getElementById("submitCheckin").addEventListener("click",()=>{
-    const name = document.getElementById("stuName").value.trim();
-    const id = document.getElementById("stuId").value.trim();
-    const role = document.getElementById("stuRole").value.trim();
-    const loc = document.getElementById("stuLocation").value;
-    const hour = new Date().getHours();
-    if(hour<17 || hour>=22){alert("Submit between 5 PM – 10 PM"); return;}
-    if(!name||!id||!role){alert("সব তথ্য পূরণ করুন");return;}
-    state.records.push({name,id,role,loc,status:"Pending"});
-    document.getElementById("studentMsg").textContent="আপনার রিকোয়েস্ট রেকর্ড হয়েছে।";
-    document.getElementById("stuName").value="";
-    document.getElementById("stuId").value="";
-    document.getElementById("stuRole").value="";
-    renderApprovalList();
+// Pickup Location select
+const stuLocation=document.getElementById("stuLocation");
+state.routes.forEach(r=>{
+  const o=document.createElement("option");
+  o.value=r; o.textContent=r;
+  stuLocation.appendChild(o);
+});
+
+// Check-in Submit
+document.getElementById("submitCheckin").addEventListener("click",()=>{
+  const name=document.getElementById("stuName").value.trim();
+  const id=document.getElementById("stuId").value.trim();
+  const role=document.getElementById("stuRole").value.trim();
+  const loc=document.getElementById("stuLocation").value;
+  const hour=new Date().getHours();
+  if(hour<17||hour>=22){ alert("Submit between 5 PM – 10 PM"); return;}
+  if(!name||!id||!role){ alert("সব তথ্য পূরণ করুন"); return;}
+  state.records.push({name,id,role,loc,status:"Pending"});
+  document.getElementById("studentMsg").textContent="আপনার রিকোয়েস্ট রেকর্ড হয়েছে।";
+  document.getElementById("stuName").value="";
+  document.getElementById("stuId").value="";
+  document.getElementById("stuRole").value="";
+  renderApprovalList();
+  renderSummary();
+});
+
+// Approval List
+function renderApprovalList(){
+  const container=document.getElementById("approvalList");
+  container.innerHTML="";
+  state.records.forEach((r,i)=>{
+    if(r.status==="Pending"){
+      const div=document.createElement("div");
+      div.style.marginBottom="6px";
+      div.innerHTML=`${r.name} (${r.id}) — ${r.role}, ${r.loc} 
+        <button class="btn" style="margin-left:6px" onclick="approve(${i})">Yes</button>
+        <button class="btn ghost" style="margin-left:4px" onclick="reject(${i})">No</button>`;
+      container.appendChild(div);
+    } else {
+      const div=document.createElement("div");
+      const statusClass=r.status==="Approved"?"status-approved":"status-rejected";
+      div.innerHTML=${r.name} (${r.id}) — ${r.role}, ${r.loc} <span class="status-label ${statusClass}">${r.status}</span>;
+      container.appendChild(div);
+    }
   });
+}
+window.approve=function(i){state.records[i].status="Approved"; renderApprovalList(); renderSummary();}
+window.reject=function(i){state.records[i].status="Rejected"; renderApprovalList(); renderSummary();}
 
-  // Approval list
-  function renderApprovalList(){
-    const container = document.getElementById("approvalList");
-    container.innerHTML="";
-    state.records.forEach((r,i)=>{
-      if(r.status==="Pending"){
-        const div = document.createElement("div");
-        div.style.marginBottom="6px";
-        div.innerHTML = `${r.name} (${r.id}) — ${r.role}, ${r.loc} 
-          <button class="btn" style="margin-left:6px" onclick="approve(${i})">Yes</button>
-          <button class="btn ghost" style="margin-left:4px" onclick="reject(${i})">No</button>`;
-        container.appendChild(div);
-      }
-    });
-  }
-  window.approve=function(i){state.records[i].status="Approved";renderApprovalList();}
-  window.reject=function(i){state.records[i].status="Rejected";renderApprovalList();}
-
-  // Download Driver List as PDF
-  document.getElementById("downloadDrivers").addEventListener("click",()=>{
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.setFontSize(16);
-    doc.text("Eastern University Transport — Driver List",14,20);
-    doc.setFontSize(12);
-    let y=30;
-    state.routes.forEach(r=>{
-      const d = state.drivers.find(d=>d.route===r);
-      const driverName = d?d.name:"Not Assigned";
-      const phone = d?d.phone:"-";
-      doc.text(Route: ${r} — Driver: ${driverName} — Phone: ${phone},14,y);
-      y+=10;
-      if(y>280){doc.addPage();y=20;}
-    });
-    doc.save("driver_list.pdf");
+// Route-wise summary
+function renderSummary(){
+  const container=document.getElementById("summaryList");
+  container.innerHTML="";
+  state.routes.forEach(r=>{
+    const count=state.records.filter(x=>x.loc===r && x.status==="Approved").length;
+    container.innerHTML+=<div>${r}: ${count} passengers</div>;
   });
+}
+renderSummary();
+
+// Download driver list PDF
+document.getElementById("downloadDrivers").addEventListener("click",()=>{
+  const { jsPDF } = window.jspdf;
+  const doc=new jsPDF();
+  doc.setFontSize(16);
+  doc.text("Eastern University Transport — Driver List",14,20);
+  doc.setFontSize(12);
+  let y=30;
+  state.routes.forEach(r=>{
+    const d=state.drivers.find(d=>d.route===r);
+    const driverName=d?d.name:"Not Assigned";
+    const phone=d?d.phone:"-";
+    doc.text(Route: ${r} — Driver: ${driverName} — Phone: ${phone},14,y);
+    y+=10;
+    if(y>280){doc.addPage();y=20;}
+  });
+  doc.save("driver_list.pdf");
+});
 </script>
 </body>
 </html>
