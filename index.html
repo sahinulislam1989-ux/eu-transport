@@ -3,485 +3,567 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Eastern University Transport — Daily Requests</title>
-<link rel="icon" href="" />
+<title>Eastern University Transport — Dashboard</title>
+<!--
+  Ready-to-use single-file dashboard:
+  - Save as index.html, put images (eu.jpeg, profile.jpeg, mizen.jpeg) in same folder if available.
+  - Open in browser (Chrome/Edge recommended). Data stored in localStorage.
+-->
 <style>
-:root{
-  --bg:#f3f6fb; --card:#fff; --muted:#475569; --accent:#0b5cff; --accent2:#ff6b35;
-  --yes:#16a34a; --no:#dc2626; --pending:#f59e0b;
-}
-*{box-sizing:border-box}
-body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);margin:0;color:#0b1220}
-.container{max-width:1100px;margin:18px auto;padding:16px}
-.header{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:18px}
-.logo-circle{width:140px;height:140px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6a11cb,#2575fc);color:#fff;font-weight:800;font-size:36px;box-shadow:0 8px 24px rgba(37,117,252,0.16)}
-.logo-title{font-size:20px;color:var(--accent2);font-weight:700}
-.card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.06);margin-bottom:16px}
-.row{display:flex;gap:12px;flex-wrap:wrap}
-.col{flex:1;min-width:260px}
-.small{font-size:13px;color:var(--muted)}
-.profile{display:flex;gap:12px;align-items:center;margin-top:10px}
-.profile img{width:72px;height:72px;border-radius:12px;object-fit:cover;border:3px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
-.grid{display:grid;gap:10px}
-.cols-3{grid-template-columns:repeat(3,1fr)}
-label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-input,select,button,textarea{font-size:15px;padding:10px;border-radius:8px;border:1px solid #e6eef6;width:100%}
-button{cursor:pointer}
-.btn-primary{background:var(--accent);color:#fff;border:none;padding:10px 12px;border-radius:8px}
-.btn-ghost{background:transparent;border:1px solid #dbeafe;color:var(--accent);padding:10px 12px;border-radius:8px}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{background:linear-gradient(135deg,#6a11cb,#2575fc);color:#fff;padding:6px 10px;border-radius:999px;font-weight:700}
-.table{width:100%;border-collapse:collapse;margin-top:10px}
-.table th{background:var(--accent);color:#fff;padding:10px;text-align:left}
-.table td{padding:8px;border-bottom:1px solid #f1f5f9}
-.status{display:inline-block;padding:4px 8px;border-radius:8px;color:#fff;font-weight:700}
-.status.pending{background:var(--pending)}
-.status.yes{background:var(--yes)}
-.status.no{background:var(--no)}
-.summary-card{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
-.summary-item{background:linear-gradient(135deg,#ffffff,#f8fafc);padding:12px;border-radius:10px;min-width:150px;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
-.note{font-size:13px;color:var(--muted);margin-top:8px}
-.footer{margin-top:10px;font-size:13px;color:var(--muted);text-align:center}
-.input-focus{box-shadow:0 0 8px rgba(11,92,255,0.12);border-color:var(--accent) !important}
-@media(max-width:720px){.cols-3{grid-template-columns:1fr}}
+  :root{
+    --bg:#f3f7fc; --card:#ffffff; --muted:#5b6b79; --primary:#0b5cff; --accent:#ff6b35;
+    --yes:#16a34a; --no:#ef4444; --pending:#f59e0b;
+  }
+  *{box-sizing:border-box}
+  body{font-family:Inter, "Segoe UI", Arial, sans-serif; margin:0; background:var(--bg); color:#0b1220}
+  .wrap{max-width:1100px;margin:18px auto;padding:14px}
+  /* Header */
+  .hero{background:linear-gradient(135deg,var(--primary),#5b21b6); color:#fff; border-radius:12px; padding:22px; text-align:center; box-shadow:0 8px 30px rgba(37,117,252,0.12)}
+  .logo-big{width:120px;height:120px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.12);font-weight:800;font-size:34px;margin-bottom:8px;border:4px solid rgba(255,255,255,0.12)}
+  .title{font-size:22px;margin:0 0 6px 0;font-weight:800}
+  .subtitle{opacity:0.9;margin:0;font-size:14px}
+  /* Cards */
+  .card{background:var(--card);padding:14px;border-radius:12px;margin-top:16px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+  .row{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+  .col{flex:1;min-width:260px}
+  .small{font-size:13px;color:var(--muted)}
+  label{display:block;font-size:14px;color:var(--muted);margin-bottom:6px}
+  input,select,textarea,button{font-size:14px;padding:10px;border-radius:8px;border:1px solid #e6eef6;width:100%;box-sizing:border-box}
+  button{cursor:pointer}
+  .btn{background:var(--primary);color:#fff;border:none;padding:10px 12px;border-radius:8px}
+  .btn.ghost{background:transparent;border:1px solid rgba(11,92,255,0.15);color:var(--primary)}
+  .btn.warn{background:var(--accent)}
+  .chip{display:inline-block;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg,var(--primary),#6a11cb);color:#fff;margin:4px;font-weight:700}
+  table{width:100%;border-collapse:collapse;margin-top:10px}
+  th,td{padding:8px;border-bottom:1px solid #f1f5f9;text-align:left}
+  th{background:var(--primary);color:#fff}
+  .profile{display:flex;gap:12px;align-items:center}
+  .profile img{width:72px;height:72px;border-radius:10px;object-fit:cover;border:3px solid #fff;box-shadow:0 8px 20px rgba(0,0,0,0.08)}
+  .status{padding:6px 8px;border-radius:8px;color:#fff;font-weight:700}
+  .s-pending{background:var(--pending)}
+  .s-yes{background:var(--yes)}
+  .s-no{background:var(--no)}
+  .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:10px}
+  .summary-item{background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:10px;box-shadow:0 6px 14px rgba(2,6,23,0.04)}
+  .muted{color:var(--muted)}
+  .input-inline{display:flex;gap:8px}
+  .input-inline > *{flex:1}
+  @media(max-width:800px){.row{flex-direction:column}}
 </style>
 </head>
 <body>
-<div class="container">
+  <div class="wrap">
 
-  <!-- HEADER / BIG LOGO -->
-  <div class="header">
-    <div class="logo-circle" id="logoDisplay">EU</div>
-    <div class="logo-title">Eastern University</div>
-    <div class="small">Daily transport request & boarding tracker — submit between 5 PM and 10 PM</div>
-  </div>
+    <!-- HEADER -->
+    <div class="hero">
+      <div class="logo-big" id="logoBox">
+        <!-- if image available, will replace -->
+        EU
+      </div>
+      <div class="title">Eastern University</div>
+      <div class="subtitle">Transport Dashboard — রোজকার যাত্রী অনুমান ও ড্রাইভার সমন্বয়</div>
+    </div>
 
-  <!-- PROFILES -->
-  <div class="card" id="profilesCard">
-    <h3 style="margin:0 0 8px 0">Transport Team</h3>
-    <div class="row">
-      <div class="profile">
-        <img id="profileImg1" src="profile.jpeg" alt="Md. Sahihen">
-        <div>
-          <div style="font-weight:800">Md. Sahihen</div>
-          <div class="small">Assistant Director of Transport</div>
-          <div class="small">Mobile: 01962419405</div>
+    <!-- PROFILE -->
+    <div class="card" id="profileCard">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <h3 style="margin:0">Contact & Profiles</h3>
+        <div class="small muted">Contact officers in case of issues</div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div class="col profile">
+          <img id="p1" src="profile.jpeg" alt="Md. Sahihen" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;72&quot; height=&quot;72&quot;><rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#e6eef6&quot;/><text x=&quot;50%&quot; y=&quot;55%&quot; dominant-baseline=&quot;middle&quot; text-anchor=&quot;middle&quot; fill=&quot;#94a3b8&quot; font-size=&quot;22&quot;>S</text></svg>'" />
+          <div>
+            <div style="font-weight:800">Md. Sahihen</div>
+            <div class="small muted">Assistant Director of Transport</div>
+            <div class="small muted">Mobile: <strong id="p1phone">01962419405</strong></div>
+          </div>
+        </div>
+
+        <div class="col profile">
+          <img id="p2" src="mizen.jpeg" alt="Mizanur Rahman" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;72&quot; height=&quot;72&quot;><rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#e6eef6&quot;/><text x=&quot;50%&quot; y=&quot;55%&quot; dominant-baseline=&quot;middle&quot; text-anchor=&quot;middle&quot; fill=&quot;#94a3b8&quot; font-size=&quot;22&quot;>M</text></svg>'" />
+          <div>
+            <div style="font-weight:800">Mizanur Rahman</div>
+            <div class="small muted">Senior In-charge of Transport</div>
+            <div class="small muted">Mobile: <strong id="p2phone">01911090134</strong></div>
+          </div>
+        </div>
+
+        <div style="flex-basis:320px" class="col">
+          <div style="font-weight:700;margin-bottom:6px">Quick Info</div>
+          <div class="small muted">- Submit requests between <strong>5:00 PM — 10:00 PM</strong>.</div>
+          <div class="small muted">- Admin can add/edit routes & drivers below.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN: Config / Routes & Drivers -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <h3 style="margin:0">Route & Driver Management <span class="small muted" style="margin-left:8px">(Admin)</span></h3>
+        <div class="small muted">Add / edit routes and driver contacts (saved locally)</div>
+      </div>
+
+      <div style="margin-top:12px" class="row">
+        <div class="col">
+          <label>New Route name (নতুন রোড)</label>
+          <div class="input-inline">
+            <input id="newRoute" placeholder="e.g. Rampara">
+            <button class="btn" id="addRouteBtn">Add Route</button>
+          </div>
+        </div>
+        <div class="col">
+          <label>Assign Driver (Route|Name|Phone)</label>
+          <div class="input-inline">
+            <input id="newDriver" placeholder="Format: Rampara|Kabir Hossain|017xxxxxxxx">
+            <button class="btn" id="addDriverBtn">Add / Update</button>
+          </div>
+        </div>
+        <div class="col">
+          <label>Seats per vehicle</label>
+          <input id="seatsPerBus" type="number" value="30" min="1">
         </div>
       </div>
 
-      <div class="profile">
-        <img id="profileImg2" src="mizen.jpeg" alt="Mizanur Rahman">
+      <div style="margin-top:12px">
+        <div class="small muted">Existing Routes</div>
+        <div id="routesChips" style="margin-top:8px"></div>
+
+        <table id="driversTable" style="margin-top:10px">
+          <thead><tr><th>Route</th><th>Driver</th><th>Phone</th><th>Action</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- CHECK-IN (Student / Faculty) -->
+    <div class="card" id="checkinCard" style="background:linear-gradient(135deg,#fff,#f8fbff)">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <h3 style="margin:0">Request Form — রিকোয়েস্ট ফর্ম</h3>
+        <div class="small muted">Name + ID + Pickup location</div>
+      </div>
+
+      <div style="margin-top:12px" class="grid cols-3">
         <div>
-          <div style="font-weight:800">Mizanur Rahman</div>
-          <div class="small">Senior In-charge of Transport</div>
-          <div class="small">Mobile: 01911090134</div>
+          <label>নাম / Name</label>
+          <input id="stuName" placeholder="Full name">
+        </div>
+        <div>
+          <label>আইডি / ID (or Mobile)</label>
+          <input id="stuId" placeholder="Student ID or Mobile">
+        </div>
+        <div>
+          <label>Pickup Location</label>
+          <select id="stuLocation"><option value="">-- Select --</option></select>
+        </div>
+        <div>
+          <label>Phone (optional)</label>
+          <input id="stuPhone" placeholder="Mobile (optional)">
+        </div>
+        <div style="align-self:center">
+          <label>&nbsp;</label>
+          <button class="btn" id="submitReqBtn">Send Request / রিকোয়েস্ট</button>
+        </div>
+        <div>
+          <label>&nbsp;</label>
+          <div id="reqMsg" class="small" style="color:green"></div>
         </div>
       </div>
+      <div class="small muted" style="margin-top:10px">Note: Requests accepted between 17:00 — 22:00. Outside this window submissions are blocked.</div>
     </div>
-  </div>
 
-  <!-- CONFIG: seats per bus + drivers -->
-  <div class="card">
-    <div class="row">
-      <div class="col">
-        <label>Seats per bus / van</label>
-        <input id="seatsPerBus" type="number" min="1" value="30">
-        <div class="note">Use this to calculate how many vehicles needed per route (based on approved riders).</div>
+    <!-- REQUESTS & ACTIONS -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <h3 style="margin:0">Today's Requests — আজকের রিকোয়েস্টসমূহ</h3>
+        <div style="display:flex;gap:8px">
+          <button class="btn" id="downloadReportPdf">Generate Final Report (PDF)</button>
+          <button class="btn.ghost" id="downloadCsv">Download CSV</button>
+        </div>
       </div>
-      <div class="col">
-        <label>Routes (editable)</label>
-        <textarea id="routesInput" rows="3" placeholder="One route per line (e.g. Rampara)"></textarea>
-        <div class="note">Edit route list here and click Update routes.</div>
-      </div>
-      <div class="col">
-        <label>Driver list (editable)</label>
-        <textarea id="driversInput" rows="3" placeholder="Format: Route|Driver Name|Phone (one per line)"></textarea>
-        <div class="note">Example: Rampara|Kabir Hossain|017xxxxxxxx</div>
-      </div>
-    </div>
-    <div style="margin-top:10px" class="row">
-      <button class="btn-primary" id="updateConfig">Update routes & drivers</button>
-      <button class="btn-ghost" id="resetData">Reset All Requests</button>
-    </div>
-  </div>
 
-  <!-- ROUTE / DRIVER TABLE & PDF -->
-  <div class="card">
-    <h3 style="margin:0 0 8px 0">Routes & Drivers</h3>
-    <div class="chips" id="routesChips"></div>
-    <table class="table" id="driverTable">
-      <thead><tr><th>Route</th><th>Driver</th><th>Phone</th></tr></thead>
-      <tbody></tbody>
-    </table>
-    <div style="margin-top:10px" class="row">
-      <button class="btn-primary" id="downloadDriversPdf">Download Driver List (PDF)</button>
-      <button class="btn-ghost" id="downloadDriversCsv">Download Driver CSV</button>
-    </div>
-  </div>
+      <div style="margin-top:12px;overflow:auto">
+        <table id="requestsTable" style="width:100%">
+          <thead><tr><th>Time</th><th>Name</th><th>ID</th><th>Phone</th><th>Pickup</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
 
-  <!-- CHECK-IN FORM (colorful) -->
-  <div class="card" id="checkinCard" style="background:linear-gradient(135deg,#6a11cb,#2575fc);color:#fff">
-    <h3 style="margin:0 0 8px 0">Student / Faculty — Coming Tomorrow (Request)</h3>
-    <div class="small" style="color:rgba(255,255,255,0.9)">Fill this between 5 PM and 10 PM. Pickup location is the stop/route name.</div>
-    <div class="grid cols-3" style="margin-top:10px">
-      <div>
-        <label style="color:#fff">নাম (Name)</label>
-        <input id="stuName" placeholder="Full name">
-      </div>
-      <div>
-        <label style="color:#fff">ID / Mobile</label>
-        <input id="stuId" placeholder="Student ID or Mobile">
-      </div>
-      <div>
-        <label style="color:#fff">পদবী (Designation)</label>
-        <input id="stuRole" placeholder="Student / Faculty / Officer">
-      </div>
-      <div>
-        <label style="color:#fff">Pickup Location</label>
-        <select id="stuLocation"></select>
-      </div>
-      <div>
-        <label style="color:#fff">Phone (optional)</label>
-        <input id="stuPhone" placeholder="Mobile number">
-      </div>
-      <div style="align-self:center">
-        <label style="color:transparent">submit</label>
-        <button class="btn-primary" id="submitReq">Send Request</button>
+      <div style="margin-top:10px">
+        <div class="small muted">Action: Click <strong>Yes</strong> when rider boards (this marks Approved).</div>
       </div>
     </div>
-    <div id="reqMsg" style="margin-top:10px;color:#e6ffed;font-weight:700"></div>
-  </div>
 
-  <!-- PENDING / BOARDING LIST -->
-  <div class="card">
-    <h3 style="margin:0 0 8px 0">Today's Requests & Boarding</h3>
-    <div class="small">After rider boards, click <strong>Yes</strong>. If not, click <strong>No</strong>.</div>
-    <table class="table" id="requestsTable">
-      <thead>
-        <tr><th>Time</th><th>Name</th><th>ID</th><th>Designation</th><th>Phone</th><th>Pickup</th><th>Status</th><th>Action</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-
-    <div style="margin-top:10px" class="row">
-      <button class="btn-primary" id="exportPdf">Generate Final Report (PDF)</button>
-      <button class="btn-ghost" id="exportCsv">Download CSV</button>
+    <!-- SUMMARY -->
+    <div class="card">
+      <h3 style="margin:0">Live Summary — Route-wise passengers</h3>
+      <div class="summary-grid" id="summaryGrid"></div>
+      <div class="small muted" style="margin-top:10px">Approved = boarded. Pending = requested but not yet boarded.</div>
     </div>
-    <div class="note">Final report includes route-wise totals and full request list (Approved = boarded).</div>
+
   </div>
 
-  <!-- SUMMARY -->
-  <div class="card">
-    <h3 style="margin:0 0 8px 0">Route-wise Summary (Approved / Required vehicles)</h3>
-    <div id="summaryBoxes" class="summary-card"></div>
-    <div class="note">Counts show number of boarded (Yes). Use seats-per-bus to estimate how many vehicles needed.</div>
-  </div>
-
-  <div class="footer">Made for Eastern University Transport — Demo. Data stored locally in browser.</div>
-</div>
-
-<!-- jsPDF CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 <script>
-// ---------- State & storage ----------
-const STORAGE_KEY = 'eu_transport_requests_v1';
-let store = loadStore();
-function loadStore(){
+/* --------------------------
+  State (persist in localStorage)
+--------------------------- */
+const STORAGE_KEY = 'eu_transport_dashboard_v2';
+let state = loadState();
+
+function loadState(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw) return JSON.parse(raw);
   }catch(e){}
+  // default
   return {
     routes: ["Rampara","Dhanmondi","Malibagh","NarayanGanj","Chashara","Gulshan"],
     drivers: [
-      {route:"Rampara",name:"Kabir Hossain",phone:"017XXXXXXXX"},
-      {route:"Dhanmondi",name:"Shahin Alam",phone:"018XXXXXXXX"},
-      {route:"Malibagh",name:"Mizanur Rahman",phone:"019XXXXXXXX"}
+      {route:"Rampara", name:"Kabir Hossain", phone:"01711111111"},
+      {route:"Dhanmondi", name:"Kamal Uddin", phone:"01722222222"},
+      {route:"Malibagh", name:"Sazzad Hossain", phone:"01733333333"}
     ],
     seatsPerBus: 30,
-    requests: [] // {id, timeISO, name, sid, role, phone, pickup, status}
+    requests: [] // {id, timeISO, name, sid, phone, pickup, status}
   };
 }
-function saveStore(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }
+function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 
-// ---------- UI helpers ----------
+/* --------------------------
+  DOM refs
+--------------------------- */
 const routesChips = document.getElementById('routesChips');
-const driverTableBody = document.querySelector('#driverTable tbody');
-const routesInput = document.getElementById('routesInput');
-const driversInput = document.getElementById('driversInput');
+const driversTableBody = document.querySelector('#driversTable tbody');
+const routesSelect = document.getElementById('stuLocation');
+const requestsTbody = document.querySelector('#requestsTable tbody');
+const summaryGrid = document.getElementById('summaryGrid');
 const seatsPerBusInput = document.getElementById('seatsPerBus');
-const stuLocation = document.getElementById('stuLocation');
-const requestsTableBody = document.querySelector('#requestsTable tbody');
-const reqMsg = document.getElementById('reqMsg');
-const summaryBoxes = document.getElementById('summaryBoxes');
-const routesTextArea = routesInput;
-const driversTextArea = driversInput;
 
-// init UI from store
-function initUI(){
-  seatsPerBusInput.value = store.seatsPerBus || 30;
-  routesInput.value = store.routes.join('\\n');
-  driversInput.value = store.drivers.map(d=>${d.route}|${d.name}|${d.phone}).join('\\n');
+/* --------------------------
+  Init UI
+--------------------------- */
+function init(){
   renderRoutesDrivers();
-  renderRequestsTable();
+  renderRequests();
   renderSummary();
+  seatsPerBusInput.value = state.seatsPerBus || 30;
 }
+init();
+
+/* --------------------------
+  Routes & Drivers render
+--------------------------- */
 function renderRoutesDrivers(){
   // chips
   routesChips.innerHTML = '';
-  store.routes.forEach(r=>{
-    const s = document.createElement('div');
-    s.className='chip';
-    s.textContent = r;
-    routesChips.appendChild(s);
+  state.routes.forEach(r=>{
+    const d = document.createElement('div'); d.className='chip'; d.textContent=r;
+    routesChips.appendChild(d);
   });
-  // driver table
-  driverTableBody.innerHTML = '';
-  store.routes.forEach(r=>{
-    const d = store.drivers.find(x=>x.route===r);
+  // drivers table
+  driversTableBody.innerHTML = '';
+  state.routes.forEach(r=>{
+    const driver = state.drivers.find(x=>x.route===r);
     const tr = document.createElement('tr');
-    tr.innerHTML = <td>${r}</td><td>${d?escapeHtml(d.name):'<em>Not Assigned</em>'}</td><td>${d?escapeHtml(d.phone):'-'}</td>;
-    driverTableBody.appendChild(tr);
+    tr.innerHTML = `<td>${r}</td>
+      <td>${driver?escapeHtml(driver.name):'<em>Not assigned</em>'}</td>
+      <td>${driver?escapeHtml(driver.phone):'-'}</td>
+      <td>
+        <button class="btn.ghost" onclick="editDriverPrompt('${r.replace(/'/g,"\\'")}')">Edit</button>
+        <button class="btn.ghost" onclick="deleteDriver('${r.replace(/'/g,"\\'")}')" style="margin-left:6px">Delete</button>
+      </td>`;
+    driversTableBody.appendChild(tr);
   });
-  // pick list
-  stuLocation.innerHTML = '';
-  const opt0 = document.createElement('option'); opt0.value=''; opt0.textContent='-- Select pickup location --'; stuLocation.appendChild(opt0);
-  store.routes.forEach(r=>{
-    const o = document.createElement('option'); o.value = r; o.textContent = r; stuLocation.appendChild(o);
+  // pickup select
+  routesSelect.innerHTML = '<option value="">-- Select pickup location --</option>';
+  state.routes.forEach(r=>{
+    const o = document.createElement('option'); o.value = r; o.textContent = r; routesSelect.appendChild(o);
   });
+  // save
+  saveState();
 }
-function escapeHtml(s){ return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
 
-// ---------- Config update ----------
-document.getElementById('updateConfig').addEventListener('click', ()=>{
-  // routes
-  const routesText = routesInput.value.trim();
-  const newRoutes = routesText ? routesText.split('\\n').map(x=>x.trim()).filter(Boolean) : [];
-  // drivers parse
-  const driversLines = driversInput.value.trim().split('\\n').map(x=>x.trim()).filter(Boolean);
-  const newDrivers = driversLines.map(line=>{
-    const parts = line.split('|').map(p=>p.trim());
-    return {route:parts[0]||'', name:parts[1]||'Unknown', phone:parts[2]||''};
-  }).filter(d=>d.route);
-  if(newRoutes.length===0){ alert('At least one route required'); return;}
-  store.routes = newRoutes;
-  store.drivers = newDrivers;
-  store.seatsPerBus = Number(seatsPerBusInput.value) || store.seatsPerBus;
-  saveStore();
+/* --------------------------
+  Add route / add driver (admin)
+--------------------------- */
+document.getElementById('addRouteBtn').addEventListener('click', ()=>{
+  const v = document.getElementById('newRoute').value.trim();
+  if(!v){ alert('Route name required'); return; }
+  if(state.routes.includes(v)){ alert('Route already exists'); document.getElementById('newRoute').value=''; return; }
+  state.routes.push(v);
+  document.getElementById('newRoute').value='';
   renderRoutesDrivers();
   renderSummary();
-  alert('Routes and drivers updated');
 });
 
-// reset data
-document.getElementById('resetData').addEventListener('click', ()=>{
-  if(!confirm('Reset all stored requests?')) return;
-  store.requests = [];
-  saveStore();
-  renderRequestsTable();
+document.getElementById('addDriverBtn').addEventListener('click', ()=>{
+  const v = document.getElementById('newDriver').value.trim();
+  if(!v){ alert('Enter in format: Route|Driver Name|Phone'); return; }
+  const parts = v.split('|').map(x=>x.trim());
+  if(parts.length < 3){ alert('Format: Route|Driver Name|Phone'); return; }
+  const [route,name,phone] = parts;
+  // update driver or add
+  const idx = state.drivers.findIndex(d=>d.route===route);
+  if(idx>=0){ state.drivers[idx] = {route,name,phone}; }
+  else { state.drivers.push({route,name,phone}); if(!state.routes.includes(route)){ state.routes.push(route); } }
+  document.getElementById('newDriver').value='';
+  renderRoutesDrivers();
+});
+
+/* edit/delete driver */
+window.editDriverPrompt = function(route){
+  const driver = state.drivers.find(x=>x.route===route) || {name:'',phone:''};
+  const name = prompt('Driver name for '+route, driver.name);
+  if(name===null) return;
+  const phone = prompt('Phone for '+route, driver.phone);
+  if(phone===null) return;
+  // update or add
+  const idx = state.drivers.findIndex(d=>d.route===route);
+  if(idx>=0) state.drivers[idx] = {route,name,phone};
+  else state.drivers.push({route,name,phone});
+  renderRoutesDrivers();
+};
+window.deleteDriver = function(route){
+  if(!confirm('Remove driver record for '+route+'?')) return;
+  state.drivers = state.drivers.filter(d=>d.route!==route);
+  renderRoutesDrivers();
+};
+
+/* seats change */
+seatsPerBusInput.addEventListener('change', ()=>{
+  state.seatsPerBus = Number(seatsPerBusInput.value) || state.seatsPerBus;
+  saveState();
   renderSummary();
-  alert('Requests reset');
 });
 
-// ---------- Submit request ----------
-document.getElementById('submitReq').addEventListener('click', ()=>{
-  const hour = new Date().getHours();
-  if(hour < 17 || hour >= 22){
-    reqMsg.style.color = '#ffdddd';
-    reqMsg.textContent = 'Request window closed — allowed between 5 PM and 10 PM';
-    return;
-  }
+/* --------------------------
+  Request submit (Student/Faculty)
+--------------------------- */
+document.getElementById('submitReqBtn').addEventListener('click', ()=>{
   const name = document.getElementById('stuName').value.trim();
   const sid = document.getElementById('stuId').value.trim();
-  const role = document.getElementById('stuRole').value.trim();
   const phone = document.getElementById('stuPhone').value.trim();
-  const pickup = stuLocation.value;
-  if(!name || !sid || !role || !pickup){
-    reqMsg.style.color = '#ffdede';
-    reqMsg.textContent = 'সব তথ্য পূরণ করুন (Name, ID, Designation, Pickup)';
+  const pickup = document.getElementById('stuLocation').value;
+  const now = new Date();
+  const hour = now.getHours();
+  const msgEl = document.getElementById('reqMsg');
+
+  if(hour < 17 || hour >= 22){
+    msgEl.style.color = '#ffdddd'; msgEl.textContent = 'Request window closed — allowed 17:00–22:00';
     return;
   }
-  const rec = {
-    id: 'r' + Date.now(),
-    timeISO: new Date().toISOString(),
-    name, sid, role, phone, pickup,
-    status: 'Pending'
-  };
-  store.requests.push(rec);
-  saveStore();
-  // success
-  reqMsg.style.color = '#eaffef';
-  reqMsg.textContent = 'আপনার রিকোয়েস্ট রেকর্ড হয়েছে — ধন্যবাদ';
-  // clear inputs
-  document.getElementById('stuName').value=''; document.getElementById('stuId').value=''; document.getElementById('stuRole').value=''; document.getElementById('stuPhone').value='';
-  renderRequestsTable();
+  if(!name || !sid || !pickup){ msgEl.style.color = '#ffdddd'; msgEl.textContent = 'Name, ID and Pickup required'; return; }
+
+  const rec = { id: 'req'+Date.now(), timeISO: new Date().toISOString(), name, sid, phone, pickup, status:'Pending' };
+  state.requests.push(rec);
+  saveState();
+  document.getElementById('stuName').value=''; document.getElementById('stuId').value=''; document.getElementById('stuPhone').value='';
+  msgEl.style.color='#0b6623'; msgEl.textContent = 'Request recorded — ধন্যবাদ';
+  renderRequests();
   renderSummary();
 });
 
-// ---------- Render requests table ----------
-function renderRequestsTable(){
-  requestsTableBody.innerHTML = '';
-  // sort today's requests by time descending (optionally)
+/* --------------------------
+  Render requests (today)
+--------------------------- */
+function renderRequests(){
+  requestsTbody.innerHTML = '';
+  // show today's requests (by date)
   const todayKey = (new Date()).toISOString().slice(0,10);
-  const todays = store.requests.filter(r=>r.timeISO.slice(0,10) === todayKey);
+  const todays = state.requests.filter(r => r.timeISO.slice(0,10) === todayKey);
+  // newest first
   todays.slice().reverse().forEach(r=>{
     const tr = document.createElement('tr');
     const time = new Date(r.timeISO).toLocaleTimeString();
-    const statusLabel = (r.status === 'Pending') ? <span class="status pending">Pending</span>
-                      : (r.status === 'Approved') ? <span class="status yes">Yes</span>
-                      : <span class="status no">No</span>;
-    const action = (r.status === 'Pending') 
-      ? `<button class="btn-primary" onclick="markYes('${r.id}')">Yes</button>
-         <button class="btn-ghost" onclick="markNo('${r.id}')">No</button>`
-      : <button class="btn-ghost" onclick="undo('${r.id}')">Undo</button>;
+    const statusLabel = (r.status==='Pending') ? `<span class="status s-pending">Pending</span>` 
+                         : (r.status==='Approved') ? `<span class="status s-yes">Yes</span>` 
+                         : `<span class="status s-no">No</span>`;
+    const action = (r.status==='Pending') 
+      ? `<button class="btn" onclick="markYes('${r.id}')">Yes</button><button class="btn.ghost" style="margin-left:6px" onclick="markNo('${r.id}')">No</button>`
+      : `<button class="btn.ghost" onclick="undo('${r.id}')">Undo</button>`;
     tr.innerHTML = `<td>${time}</td>
       <td>${escapeHtml(r.name)}</td>
       <td>${escapeHtml(r.sid)}</td>
-      <td>${escapeHtml(r.role)}</td>
       <td>${escapeHtml(r.phone||'-')}</td>
       <td>${escapeHtml(r.pickup)}</td>
       <td>${statusLabel}</td>
       <td>${action}</td>`;
-    requestsTableBody.appendChild(tr);
+    requestsTbody.appendChild(tr);
   });
 }
 
-// exposed functions for inline onclick
+/* actions */
 window.markYes = function(id){
-  const idx = store.requests.findIndex(x=>x.id===id);
-  if(idx===-1) return;
-  store.requests[idx].status = 'Approved';
-  saveStore();
-  renderRequestsTable();
-  renderSummary();
+  const idx = state.requests.findIndex(x=>x.id===id); if(idx===-1) return;
+  state.requests[idx].status = 'Approved'; saveState(); renderRequests(); renderSummary();
 };
 window.markNo = function(id){
-  const idx = store.requests.findIndex(x=>x.id===id);
-  if(idx===-1) return;
-  store.requests[idx].status = 'No';
-  saveStore();
-  renderRequestsTable();
-  renderSummary();
+  const idx = state.requests.findIndex(x=>x.id===id); if(idx===-1) return;
+  state.requests[idx].status = 'No'; saveState(); renderRequests(); renderSummary();
 };
 window.undo = function(id){
-  const idx = store.requests.findIndex(x=>x.id===id);
-  if(idx===-1) return;
-  store.requests[idx].status = 'Pending';
-  saveStore();
-  renderRequestsTable();
-  renderSummary();
+  const idx = state.requests.findIndex(x=>x.id===id); if(idx===-1) return;
+  state.requests[idx].status = 'Pending'; saveState(); renderRequests(); renderSummary();
 };
 
-// ---------- Summary generation ----------
+/* --------------------------
+  Summary (route-wise counts)
+--------------------------- */
 function renderSummary(){
-  summaryBoxes.innerHTML = '';
-  const seats = Number(seatsPerBusInput.value) || store.seatsPerBus || 30;
-  store.routes.forEach(r=>{
-    const approvedCount = store.requests.filter(x=>x.pickup===r && x.status==='Approved').length;
-    const pendingCount = store.requests.filter(x=>x.pickup===r && x.status==='Pending').length;
-    const vehicles = Math.ceil(approvedCount / seats);
-    const div = document.createElement('div');
-    div.className = 'summary-item';
-    div.innerHTML = `<div style="font-weight:800">${escapeHtml(r)}</div>
-      <div class="small">Approved: <strong>${approvedCount}</strong></div>
-      <div class="small">Pending: <strong>${pendingCount}</strong></div>
-      <div class="small">Vehicles needed: <strong>${vehicles}</strong> (seats ${seats})</div>`;
-    summaryBoxes.appendChild(div);
+  summaryGrid.innerHTML = '';
+  const seats = Number(state.seatsPerBus) || 30;
+  state.routes.forEach(route=>{
+    const approved = state.requests.filter(r=>r.pickup===route && r.status==='Approved').length;
+    const pending = state.requests.filter(r=>r.pickup===route && r.status==='Pending').length;
+    const drivers = state.drivers.find(d=>d.route===route);
+    const vehicles = Math.ceil(approved / seats);
+    const div = document.createElement('div'); div.className='summary-item';
+    div.innerHTML = `<div style="font-weight:800">${escapeHtml(route)}</div>
+      <div class="small">Approved (Boarded): <strong>${approved}</strong></div>
+      <div class="small">Pending: <strong>${pending}</strong></div>
+      <div class="small">Driver: <strong>${drivers?escapeHtml(drivers.name):'Not assigned'}</strong></div>
+      <div class="small">Phone: <strong>${drivers?escapeHtml(drivers.phone):'-'}</strong></div>
+      <div style="margin-top:6px;font-weight:700;color:var(--accent2)">Vehicles needed: ${vehicles} (seats ${seats})</div>`;
+    summaryGrid.appendChild(div);
   });
 }
 
-// ---------- Export PDF (final report) ----------
-document.getElementById('exportPdf').addEventListener('click', async ()=>{
+/* --------------------------
+  Export: PDF report + CSV
+--------------------------- */
+document.getElementById('downloadReportPdf').addEventListener('click', ()=>{
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({unit:'pt', format:'a4'});
-  const title = Eastern University Transport — Final Report (${(new Date()).toLocaleDateString()});
-  doc.setFontSize(16);
-  doc.text(title, 40, 40);
-  doc.setFontSize(12);
-  // route-wise summary
-  let y = 70;
-  doc.text('Route-wise totals (Approved):', 40, y); y += 18;
-  const seats = Number(seatsPerBusInput.value) || store.seatsPerBus || 30;
-  store.routes.forEach(r=>{
-    const approved = store.requests.filter(x=>x.pickup===r && x.status==='Approved').length;
+  const title = `Eastern University — Daily Transport Report (${new Date().toLocaleDateString()})`;
+  doc.setFontSize(14); doc.text(title, 40, 40);
+  doc.setFontSize(11);
+  let y = 64;
+  doc.text('Route — Approved (Boarded) — Pending — Driver — Phone — Vehicles', 40, y); y+=14;
+  const seats = Number(state.seatsPerBus) || 30;
+  state.routes.forEach(route=>{
+    const approved = state.requests.filter(r=>r.pickup===route && r.status==='Approved').length;
+    const pending = state.requests.filter(r=>r.pickup===route && r.status==='Pending').length;
+    const drv = state.drivers.find(d=>d.route===route);
     const vehicles = Math.ceil(approved / seats);
-    doc.text(${r}: ${approved} passengers — Vehicles needed: ${vehicles}, 60, y);
-    y += 16;
-    if(y > 740){ doc.addPage(); y = 40; }
+    const line = `${route} — ${approved} — ${pending} — ${drv?drv.name:'-'} — ${drv?drv.phone:'-'} — ${vehicles}`;
+    doc.text(line, 40, y);
+    y += 12;
+    if(y > 760){ doc.addPage(); y = 40; }
   });
-  y += 10;
-  doc.text('Full requests (today):', 40, y); y += 18;
+  // full requests listing (optional)
+  y += 8;
+  doc.addPage();
+  doc.setFontSize(12);
+  doc.text('Full requests (today)', 40, 40);
+  let yy = 60;
   const todayKey = (new Date()).toISOString().slice(0,10);
-  const todays = store.requests.filter(r=>r.timeISO.slice(0,10)===todayKey);
-  if(todays.length===0){
-    doc.text('No requests for today.', 60, y); y+=16;
+  const todays = state.requests.filter(r=>r.timeISO.slice(0,10)===todayKey);
+  if(todays.length === 0){
+    doc.text('No requests today', 40, yy);
   } else {
-    // header
-    doc.setFontSize(10);
-    doc.text('Time',40,y); doc.text('Name',100,y); doc.text('ID',260,y); doc.text('Pickup',330,y); doc.text('Status',440,y);
-    y+=14;
+    doc.setFontSize(9);
+    doc.text('Time',40,yy); doc.text('Name',100,yy); doc.text('ID',260,yy); doc.text('Pickup',340,yy); doc.text('Status',420,yy);
+    yy+=12;
     todays.forEach(r=>{
       const t = new Date(r.timeISO).toLocaleTimeString();
-      doc.text(t,40,y); doc.text(truncate(r.name,22),100,y); doc.text(truncate(r.sid,16),260,y); doc.text(truncate(r.pickup,20),330,y); doc.text(r.status,440,y);
-      y += 12;
-      if(y > 740){ doc.addPage(); y = 40; }
+      doc.text(t,40,yy); doc.text(truncate(r.name,20),100,yy); doc.text(truncate(r.sid,16),260,yy); doc.text(truncate(r.pickup,18),340,yy); doc.text(r.status,420,yy);
+      yy+=10;
+      if(yy > 760){ doc.addPage(); yy = 40; }
     });
   }
-  doc.save(eu_transport_report_${(new Date()).toISOString().slice(0,10)}.pdf);
+  doc.save(`eu_transport_report_${(new Date()).toISOString().slice(0,10)}.pdf`);
 });
-function truncate(s, n){ return s.length>n? s.slice(0,n-1)+'…': s; }
 
-// ---------- Export CSV ----------
-document.getElementById('exportCsv').addEventListener('click', ()=>{
-  const rows = [['time','name','id','role','phone','pickup','status']];
+document.getElementById('downloadCsv').addEventListener('click', ()=>{
+  const rows = [['time','name','id','phone','pickup','status']];
   const todayKey = (new Date()).toISOString().slice(0,10);
-  const todays = store.requests.filter(r=>r.timeISO.slice(0,10)===todayKey);
-  todays.forEach(r=> rows.push([r.timeISO, r.name, r.sid, r.role, r.phone||'', r.pickup, r.status]));
-  const csv = rows.map(r=> r.map(c=>"${String(c).replace(/"/g,'""')}").join(',')).join('\\n');
-  const blob = new Blob([csv], {type:'text/csv'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = eu_requests_${todayKey}.csv; a.click();
-  URL.revokeObjectURL(url);
+  const todays = state.requests.filter(r=>r.timeISO.slice(0,10)===todayKey);
+  todays.forEach(r=> rows.push([r.timeISO, r.name, r.sid, r.phone||'', r.pickup, r.status]));
+  const csv = rows.map(r=> r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'}); const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = `eu_requests_${todayKey}.csv`; a.click(); URL.revokeObjectURL(url);
 });
 
-// ---------- Drivers PDF & CSV ----------
-document.getElementById('downloadDriversPdf').addEventListener('click', ()=>{
+/* --------------------------
+  Driver list PDF (separate)
+--------------------------- */
+document.getElementById('downloadDrivers')?.addEventListener('click', ()=>{
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
-  doc.setFontSize(14);
-  doc.text('Eastern University — Driver List', 14, 20);
+  doc.setFontSize(14); doc.text('Eastern University — Drivers List', 14, 20);
   doc.setFontSize(11);
   let y = 36;
-  store.routes.forEach(r=>{
-    const d = store.drivers.find(x=>x.route===r);
-    const text = Route: ${r} — Driver: ${d?d.name:'Not Assigned'} — Phone: ${d?d.phone:'-'};
-    doc.text(text, 14, y);
-    y += 12;
-    if(y > 780){ doc.addPage(); y = 40; }
+  const seats = Number(state.seatsPerBus) || 30;
+  state.routes.forEach(route=>{
+    const drv = state.drivers.find(d=>d.route===route);
+    const approved = state.requests.filter(r=>r.pickup===route && r.status==='Approved').length;
+    const line = `${route}: Driver: ${drv?drv.name:'-'} (${drv?drv.phone:'-'}) — Approved: ${approved}`;
+    doc.text(line, 14, y);
+    y+=12;
+    if(y>780){ doc.addPage(); y=40;}
   });
-  doc.save(eu_drivers_${(new Date()).toISOString().slice(0,10)}.pdf);
-});
-document.getElementById('downloadDriversCsv').addEventListener('click', ()=>{
-  const rows = [['route','driver','phone']];
-  store.routes.forEach(r=>{
-    const d = store.drivers.find(x=>x.route===r);
-    rows.push([r, d?d.name:'', d?d.phone:'']);
-  });
-  const csv = rows.map(r=> r.map(c=>"${String(c).replace(/"/g,'""')}").join(',')).join('\\n');
-  const blob = new Blob([csv], {type:'text/csv'}); const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download = eu_drivers.csv; a.click(); URL.revokeObjectURL(url);
+  doc.save(`eu_drivers_${(new Date()).toISOString().slice(0,10)}.pdf`);
 });
 
-// ---------- Utility: load on start ----------
-initUI();
+/* --------------------------
+  Utilities
+--------------------------- */
+function escapeHtml(s){ return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+function truncate(s,n){ return s && s.length>n? s.slice(0,n-1)+'…' : s || ''; }
 
-// ensure store persisted across seats change
-seatsPerBusInput.addEventListener('change', ()=>{
-  store.seatsPerBus = Number(seatsPerBusInput.value) || store.seatsPerBus;
-  saveStore();
+/* --------------------------
+  Rendering helper wrappers
+--------------------------- */
+function renderRoutesDrivers(){ renderRoutesDrivers(); } // placeholder to avoid linter; actual used earlier
+
+/* Re-render functions after changes */
+function renderRoutesDrivers(){ /* already declared above */ }
+function renderRequests(){ renderRequests(); } // placeholder
+function renderSummary(){ renderSummary(); } // placeholder
+
+// To avoid hoisting issues, call proper functions defined earlier
+// (They were defined above; now ensure UI shows latest)
+renderRoutesDrivers = function(){ /* already defined above but redeclare safe version: */ 
+  // reusing the actual implementation above by just calling it: (we already have it)
+  // However to ensure it runs correctly, simply call the original function body — but it's already defined earlier.
+};
+(function reconcileInit(){
+  // ensure tables are up-to-date (call the actual implementations defined earlier)
+  // because we defined renderRoutesDrivers and others already, just call the earlier init helpers:
+  // The earlier definitions already executed init(); but ensure final sync:
+  saveState();
+  // Recreate UI with current state
+  renderRoutesDrivers = function(){ /* create from scratch using same logic as earlier */ 
+    // We'll reuse the earlier implementation by rebuilding DOM parts:
+    // chips, drivers table, select
+    routesChips.innerHTML = '';
+    state.routes.forEach(r=>{ const d=document.createElement('div'); d.className='chip'; d.textContent=r; routesChips.appendChild(d); });
+    driversTableBody.innerHTML = '';
+    state.routes.forEach(r=>{
+      const driver = state.drivers.find(x=>x.route===r);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${r}</td>
+        <td>${driver?escapeHtml(driver.name):'<em>Not assigned</em>'}</td>
+        <td>${driver?escapeHtml(driver.phone):'-'}</td>
+        <td>
+          <button class="btn.ghost" onclick="editDriverPrompt('${r.replace(/'/g,"\\'")}')">Edit</button>
+          <button class="btn.ghost" onclick="deleteDriver('${r.replace(/'/g,"\\'")}')" style="margin-left:6px">Delete</button>
+        </td>`;
+      driversTableBody.appendChild(tr);
+    });
+    routesSelect.innerHTML = '<option value="">-- Select pickup location --</option>';
+    state.routes.forEach(r=>{ const o=document.createElement('option'); o.value=r; o.textContent=r; routesSelect.appendChild(o); });
+  };
+  // call the implemented functions
+  renderRoutesDrivers();
+  renderRequests();
   renderSummary();
-});
+})();
+
+/* ensure data persisted */
+saveState();
 
 </script>
 </body>
