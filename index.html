@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eastern University Transport</title>
 <style>
+/* Global Styles */
 body { font-family: Arial, sans-serif; margin:20px; background:#f5f5f5; }
 h2 { color:#2c3e50; }
 section { background:#fff; padding:15px; margin-bottom:20px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
@@ -14,6 +15,45 @@ th, td { padding:8px; text-align:center;}
 button { padding:8px 12px; margin:5px; border:none; border-radius:5px; cursor:pointer;}
 button:hover { opacity:0.8;}
 #message { margin-top:10px; color:green; font-weight:bold;}
+
+/* Profile / Team Section */
+#profile {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  padding: 20px;
+  border-radius: 12px;
+  color: #fff;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+#profile h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+.team-member {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  transition: transform 0.3s;
+}
+.team-member:hover { transform: scale(1.05); }
+.profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+  border: 2px solid #fff;
+}
+.profile-info h3 { margin:0; font-size:20px; color:#fff; }
+.profile-info p { margin:2px 0; font-size:14px; color:#e0e0e0; }
+
+/* Input Fields */
+input { padding:8px; margin:5px; border-radius:5px; border:1px solid #ccc; }
 </style>
 </head>
 <body>
@@ -25,7 +65,48 @@ button:hover { opacity:0.8;}
   <p><strong>In-charge of Transport:</strong> Mizanur Rahman | Mobile: 01911090134</p>
 </section>
 
-<!-- Section 2: Driver & Route Management -->
+<!-- Section 2: Profile / Team -->
+<section id="profile">
+  <h2>Meet Our Team</h2>
+
+  <div class="team-member">
+    <img src="images/university_logo.png" alt="Eastern University Logo" class="profile-pic">
+    <div class="profile-info">
+      <h3>Md. Sahihen</h3>
+      <p>Assistant Director of Transport</p>
+      <p>Mobile: 01962419405</p>
+    </div>
+  </div>
+
+  <div class="team-member">
+    <img src="images/person1.jpg" alt="Mizanur Rahman" class="profile-pic">
+    <div class="profile-info">
+      <h3>Mizanur Rahman</h3>
+      <p>In-charge of Transport</p>
+      <p>Mobile: 01911090134</p>
+    </div>
+  </div>
+
+  <div class="team-member">
+    <img src="images/person2.jpg" alt="Person 2" class="profile-pic">
+    <div class="profile-info">
+      <h3>Person 2</h3>
+      <p>Role Here</p>
+      <p>Mobile: 01XXXXXXXXX</p>
+    </div>
+  </div>
+
+  <div class="team-member">
+    <img src="images/person3.jpg" alt="Person 3" class="profile-pic">
+    <div class="profile-info">
+      <h3>Person 3</h3>
+      <p>Role Here</p>
+      <p>Mobile: 01XXXXXXXXX</p>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: Driver & Route Management -->
 <section id="driver-panel">
   <h2>Driver & Route Assignment</h2>
   <button onclick="addDriver()">Add New Driver</button>
@@ -37,7 +118,7 @@ button:hover { opacity:0.8;}
   </table>
 </section>
 
-<!-- Section 3: Student Panel -->
+<!-- Section 4: Student Panel -->
 <section id="student-panel">
   <h2>Student Bus Attendance</h2>
   <form id="student-form">
@@ -50,7 +131,7 @@ button:hover { opacity:0.8;}
   <p><small>Request Window: 5 PM – 10 PM</small></p>
 </section>
 
-<!-- Section 4: Admin Panel -->
+<!-- Section 5: Admin Panel -->
 <section id="admin-panel">
   <h2>Today's Attendance</h2>
   <table id="attendance-table">
@@ -63,7 +144,7 @@ button:hover { opacity:0.8;}
   <button onclick="exportCSV()">Export CSV</button>
 </section>
 
-<!-- Section 5: Route-wise Forecast -->
+<!-- Section 6: Route-wise Forecast -->
 <section id="forecast-panel">
   <h2>Route-wise Forecast for Next Day</h2>
   <table id="forecast-table">
