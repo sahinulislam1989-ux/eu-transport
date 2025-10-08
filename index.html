@@ -1,366 +1,194 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Eastern University Transport — Demo (QR-enabled)</title>
-  <style>
-    :root{--bg:#f5f7fb;--card:#ffffff;--muted:#475569;--accent:#0b5cff}
-    body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial;margin:0;background:var(--bg);color:#0b1220}
-    .container{max-width:980px;margin:18px auto;padding:12px}
-    header{display:flex;gap:12px;align-items:center}
-    h1{margin:0;font-size:20px}
-    .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.06);margin-top:14px}
-    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-    input,select,button,textarea{font-size:15px;padding:10px;border-radius:8px;border:1px solid #e6eef6;width:100%;box-sizing:border-box}
-    .grid{display:grid;gap:12px}
-    .cols-3{grid-template-columns:repeat(3,1fr)}
-    .small{font-size:13px;color:var(--muted)}
-    .chip{display:inline-block;padding:6px 8px;border-radius:10px;background:#f8fafc;border:1px solid #eef2ff;margin-right:6px}
-    table{width:100%;border-collapse:collapse;margin-top:10px}
-    th,td{padding:8px;border-bottom:1px solid #f1f5f9;text-align:left}
-    .right{text-align:right}
-    .btn{background:var(--accent);color:white;border:none;padding:10px 12px;border-radius:8px;cursor:pointer}
-    .btn.ghost{background:transparent;color:var(--accent);border:1px solid #dbeafe}
-    footer{margin-top:18px;font-size:13px;color:var(--muted)}
-    .row{display:flex;gap:8px}
-    .qr-wrap{display:flex;gap:12px;align-items:center}
-    video{max-width:320px;border-radius:8px;border:1px solid #e6eef6}
-    img.qr{width:160px;height:160px;border-radius:8px;border:1px solid #e6eef6}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eastern University Transport — Full Dashboard</title>
+<style>
+  :root{--bg:#f5f7fb;--card:#ffffff;--muted:#475569;--accent:#0b5cff}
+  body{font-family:Arial,sans-serif;margin:0;background:var(--bg);color:#0b1220}
+  .container{max-width:980px;margin:18px auto;padding:12px}
+  header{display:flex;gap:12px;align-items:center;margin-bottom:20px}
+  .logo{width:80px;height:80px;border-radius:12px;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:24px}
+  h1{margin:0;font-size:22px}
+  .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.06);margin-bottom:20px}
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  input,select,button,textarea{font-size:15px;padding:10px;border-radius:8px;border:1px solid #e6eef6;width:100%;box-sizing:border-box}
+  .grid{display:grid;gap:12px}
+  .cols-3{grid-template-columns:repeat(3,1fr)}
+  .small{font-size:13px;color:var(--muted)}
+  .chip{display:inline-block;padding:6px 8px;border-radius:10px;background:#f8fafc;border:1px solid #eef2ff;margin-right:6px}
+  table{width:100%;border-collapse:collapse;margin-top:10px}
+  th,td{padding:8px;border-bottom:1px solid #f1f5f9;text-align:left}
+  .right{text-align:right}
+  .btn{background:var(--accent);color:white;border:none;padding:10px 12px;border-radius:8px;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid #dbeafe}
+  footer{margin-top:18px;font-size:13px;color:var(--muted)}
+  .row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+  .profile{display:flex;gap:12px;align-items:center;margin-top:10px}
+  .profile img{width:60px;height:60px;border-radius:50%;border:1px solid #e6eef6}
+</style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div style="width:56px;height:56px;border-radius:10px;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px">EU</div>
+<div class="container">
+  <header>
+    <div class="logo">EU</div>
+    <div>
+      <h1>Eastern University Transport</h1>
+      <div class="small">Admin Dashboard with Student & Driver Management</div>
+    </div>
+  </header>
+
+  <!-- Profile Section -->
+  <div class="card">
+    <h3>Transport Department Profiles</h3>
+    <div class="profile">
+      <img src="https://via.placeholder.com/60" alt="Md. Sahihen">
       <div>
-        <h1>Eastern University Transport — Demo (QR-enabled)</h1>
-        <div class="small">App: <strong>eu-transport.html</strong> — Use QR to share download/open link with students</div>
-      </div>
-    </header><!-- CONFIG -->
-<div class="card">
-  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
-    <div>
-      <div class="small">Configured routes</div>
-      <div style="margin-top:6px">
-        <span class="chip">চাষাড়া</span>
-        <span class="chip">নারায়ণগঞ্জ</span>
-        <span class="chip">কমলাপুর</span>
-        <span class="chip">ধানমন্ডি</span>
-        <span class="chip">সাভার</span>
-        <span class="chip">গাজীপুর</span>
-        <span class="chip">উত্তরা</span>
-        <span class="chip">মিরপুর</span>
-        <span class="chip">চান্দুরা</span>
-        <span class="chip">নবীনগর</span>
+        <strong>Md. Sahihen</strong><br>
+        Assistant Director of Transport<br>
+        Mobile: 01962419405
       </div>
     </div>
-    <div style="min-width:220px">
-      <div class="small">Cut-off for "coming tomorrow" replies</div>
-      <div style="margin-top:6px"><strong>Previous day by 22:00 (10:00 PM)</strong></div>
+    <div class="profile">
+      <img src="https://via.placeholder.com/60" alt="Mizanur Rahman">
+      <div>
+        <strong>Mizanur Rahman</strong><br>
+        Senior In-charge of Transport<br>
+        Mobile: 01911090134
+      </div>
     </div>
   </div>
 
-  <hr style="margin:12px 0;border:none;border-top:1px solid #eef2f7" />
-
-  <div class="grid cols-3">
-    <div>
-      <label>Total enrolled students</label>
-      <input id="totalStudents" type="number" min="0" value="500">
+  <!-- Configured Routes -->
+  <div class="card">
+    <h3>Configured Routes & Drivers</h3>
+    <div style="margin-top:6px">
+      <span class="chip">Rampara</span>
+      <span class="chip">Dhanmondi</span>
+      <span class="chip">Malibagh</span>
+      <span class="chip">NarayanGanj</span>
+      <span class="chip">Chashara</span>
+      <span class="chip">Gulshan</span>
     </div>
-    <div>
-      <label>Seats per bus</label>
-      <input id="seatsPerBus" type="number" min="1" value="30">
-    </div>
-    <div>
-      <label>Admin password (demo)</label>
-      <input id="adminPassword" type="text" value="demo123">
-    </div>
-  </div>
-
-  <div style="margin-top:10px;display:flex;gap:8px">
-    <button class="btn" id="saveConfig">Save config</button>
-    <button class="btn ghost" id="resetData">Reset demo data</button>
-  </div>
-</div>
-
-<!-- CHECK-IN -->
-<div class="card">
-  <h3 style="margin:0 0 8px 0">Student quick check-in (for demo)</h3>
-  <div class="small">Students mark "coming tomorrow" — data stored locally (demo). For production connect to backend.</div>
-
-  <div style="margin-top:10px" class="grid cols-3">
-    <div>
-      <label>নাম (Name)</label>
-      <input id="stuName" placeholder="Full name">
-    </div>
-    <div>
-      <label>Student ID / Mobile</label>
-      <input id="stuId" placeholder="ID or phone">
-    </div>
-    <div>
-      <label>Pickup location</label>
-      <select id="stuLocation"></select>
-    </div>
-  </div>
-
-  <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-    <label style="width:130px">Coming tomorrow?</label>
-    <select id="willCome" style="width:160px">
-      <option value="yes">Yes — I'll come</option>
-      <option value="no">No</option>
-    </select>
-    <button class="btn" id="addRecord">Submit</button>
-  </div>
-  <div id="studentMsg" class="small" style="margin-top:8px;color:green"></div>
-
-  <hr style="margin:12px 0;border:none;border-top:1px solid #eef2f7" />
-
-  <h4 style="margin:0 0 8px 0">QR for students (to download app / open portal)</h4>
-  <div class="small">Admin can set download link for the student app or hosted portal. Default value is <code>eu-transport.html</code> (relative file). If file is hosted online, use full HTTPS URL.</div>
-
-  <div style="margin-top:8px" class="grid cols-3">
-    <div>
-      <label>Download / Open link</label>
-      <input id="downloadLink" value="eu-transport.html">
-    </div>
-    <div>
-      <label>QR size (px)</label>
-      <input id="qrSize" type="number" value="200">
-    </div>
-    <div>
-      <label>&nbsp;</label>
-      <button class="btn" id="generateQR">Generate QR</button>
-    </div>
-  </div>
-
-  <div style="margin-top:12px" class="qr-wrap">
-    <div>
-      <img id="qrImage" class="qr" src="" alt="QR Image">
-    </div>
-    <div>
-      <div class="small">QR preview — students scan this to open/download the app.</div>
-      <div style="margin-top:8px"><button class="btn ghost" id="downloadQR">Download QR Image</button></div>
-    </div>
-  </div>
-</div>
-
-<!-- ADMIN LOGIN -->
-<div class="card" id="adminLoginCard">
-  <div style="display:flex;justify-content:space-between;align-items:center">
-    <h3 style="margin:0">Admin panel (login)</h3>
-    <div class="small">Use the admin password above (demo only)</div>
-  </div>
-  <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-    <input id="adminPass" placeholder="Admin password" style="max-width:240px">
-    <button class="btn" id="adminLogin">Login</button>
-  </div>
-  <div id="adminLoginMsg" class="small" style="margin-top:8px;color:red"></div>
-</div>
-
-<!-- ADMIN PANEL -->
-<div class="card" id="adminPanel" style="display:none">
-  <div style="display:flex;justify-content:space-between;align-items:center">
-    <h3 style="margin:0">Admin dashboard</h3>
-    <div class="flex">
-      <div class="small">Logged in as <strong>admin</strong></div>
-      <button class="btn ghost" id="logout">Logout</button>
-    </div>
-  </div>
-
-  <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
-    <div class="card" style="padding:12px;min-width:220px">
-      <div class="small">Total enrolled</div>
-      <div style="font-weight:700;font-size:20px" id="totalEnrolled">0</div>
-    </div>
-    <div class="card" style="padding:12px;min-width:220px">
-      <div class="small">Coming tomorrow (total)</div>
-      <div style="font-weight:700;font-size:20px" id="totalComing">0</div>
-    </div>
-    <div class="card" style="padding:12px;min-width:220px">
-      <div class="small">Estimated buses needed</div>
-      <div style="font-weight:700;font-size:20px" id="busesNeeded">0</div>
-    </div>
-  </div>
-
-  <hr style="margin:12px 0;border:none;border-top:1px solid #eef2f7" />
-
-  <div>
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <h4 style="margin:0">By location</h4>
-      <div class="small">Export or mark special event days</div>
-    </div>
-    <div style="margin-top:8px">
-      <table id="locationTable">
-        <thead><tr><th>Location</th><th class="right">Coming</th><th class="right">Buses</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-
-    <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-      <label class="small" style="width:120px">Special event multiplier</label>
-      <input id="eventMultiplier" type="number" step="0.1" value="1" style="max-width:120px" />
-      <div class="small">(use &gt;1 for exams/extra crowd)</div>
-    </div>
-
-    <div style="margin-top:10px;display:flex;gap:8px">
-      <button class="btn" id="applyMultiplier">Apply multiplier</button>
-      <button class="btn ghost" id="exportCSV">Export CSV</button>
-    </div>
-  </div>
-
-  <hr style="margin:12px 0;border:none;border-top:1px solid #eef2f7" />
-
-  <!-- ABOUT TRANSPORT -->
-  <div>
-    <h4>About Transport Department</h4>
-    <div class="small">Key contacts for Eastern University Transport</div>
-    <table style="margin-top:8px">
-      <thead><tr><th>Name</th><th>Designation</th><th>Mobile</th></tr></thead>
-      <tbody>
-        <tr><td>Md. Sahihen</td><td>Assistant Director of Transport</td><td>01962419405</td></tr>
-        <tr><td>Mizanur Rahman</td><td>In-charge of Transport</td><td>01911090134</td></tr>
-      </tbody>
+    <table id="driverTable">
+      <thead>
+        <tr><th>Route</th><th>Driver</th><th>Phone</th></tr>
+      </thead>
+      <tbody></tbody>
     </table>
+    <button class="btn" id="downloadDrivers">ড্রাইভার লিস্ট PDF ডাউনলোড</button>
   </div>
 
-  <hr style="margin:12px 0;border:none;border-top:1px solid #eef2f7" />
-
-  <!-- DRIVER ASSIGNMENT -->
-  <div>
-    <h4>Driver management / daily assignment</h4>
-    <div class="small">Add drivers to pool, then assign driver per route for a selected date. This supports permanent & temporary drivers.</div>
-    <div style="margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <input id="driverName" placeholder="Driver name (e.g. Kabir Hossain)" style="max-width:260px">
-      <input id="driverPhone" placeholder="Mobile (e.g. 017xxxxxxxx)" style="max-width:180px">
-      <select id="driverType" style="max-width:160px">
-        <option value="Permanent">Permanent</option>
-        <option value="Temporary">Temporary</option>
-      </select>
-      <button class="btn" id="addDriver">Add to pool</button>
+  <!-- Student Check-in -->
+  <div class="card">
+    <h3>Student / Faculty Check-in</h3>
+    <div class="small">Submit between 5 PM – 10 PM</div>
+    <div class="grid cols-3">
+      <div><label>নাম (Name)</label><input id="stuName" placeholder="Full Name"></div>
+      <div><label>ID / Mobile</label><input id="stuId" placeholder="ID or Phone"></div>
+      <div><label>পদবী (Designation)</label><input id="stuRole" placeholder="Student / Faculty"></div>
+      <div><label>Pickup Location</label>
+        <select id="stuLocation"></select>
+      </div>
+      <div><label>&nbsp;</label>
+        <button class="btn" id="submitCheckin">Submit</button>
+      </div>
     </div>
-
-    <div style="margin-top:10px">
-      <table id="driversTable"><thead><tr><th>Driver</th><th>Phone</th><th>Type</th><th>Action</th></tr></thead><tbody></tbody></table>
-    </div>
-
-    <div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <label class="small">Select date</label>
-      <input id="assignDate" type="date">
-      <label class="small">Select route</label>
-      <select id="assignRoute"></select>
-      <select id="assignDriverSelect" style="max-width:240px"></select>
-      <button class="btn" id="assignDriverBtn">Assign for date</button>
-    </div>
-
-    <div style="margin-top:10px">
-      <table id="assignmentsTable"><thead><tr><th>Date</th><th>Route</th><th>Driver</th><th>Phone</th><th>Action</th></tr></thead><tbody></tbody></table>
-    </div>
+    <div id="studentMsg" class="small" style="margin-top:8px;color:green"></div>
   </div>
 
-  <hr style="margin:12px 0;border:none;border-top:1px solid #eef2f7" />
-
-  <!-- QR SCANNER FOR ATTENDANCE (ADMIN) -->
-  <div>
-    <h4>QR Scanner (for admin) — mark student present on bus</h4>
-    <div class="small">This uses the browser BarcodeDetector API (Chrome/Edge). If not supported, use an external QR scanner app.</div>
-    <div style="margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <button class="btn" id="startScan">Start Camera Scan</button>
-      <button class="btn ghost" id="stopScan">Stop</button>
-      <div id="scanStatus" class="small"></div>
-    </div>
-    <div style="margin-top:8px"><video id="qrVideo" autoplay muted playsinline style="display:none"></video></div>
-    <div style="margin-top:8px"><div class="small">Detected (today): <span id="detectedList">0</span></div></div>
+  <!-- Attendance Approval -->
+  <div class="card">
+    <h3>Attendance Approval (Next Day)</h3>
+    <div id="approvalList"></div>
   </div>
 
 </div>
 
-<footer class="small">Demo app saves data in your browser. For production we can connect this to Firebase so everyone updates in real-time and QR links can point to hosted downloads.</footer>
+<footer class="small">Eastern University Transport Dashboard — Demo version</footer>
 
-  </div>  <script>
-    // ------------------ State & Defaults ------------------
-    const defaultRoutes = ["চাষাড়া","নারায়ণগঞ্জ","কমলাপুর","ধানমন্ডি","সাভার","গাজীপুর","উত্তরা","মিরপুর","চান্দুরা","নবীনগর"]; 
-    const STORAGE_KEY = 'eu_transport_qr_demo_v2';
-    function loadState(){try{const raw=localStorage.getItem(STORAGE_KEY);return raw?JSON.parse(raw):{records:[],config:{totalStudents:500,seatsPerBus:30,adminPassword:'demo123'},routes:defaultRoutes,drivers:[],assignments:[],eventMultiplier:1}}catch(e){return {records:[],config:{totalStudents:500,seatsPerBus:30,adminPassword:'demo123'},routes:defaultRoutes,drivers:[],assignments:[],eventMultiplier:1}}}
-    function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
-    let state = loadState();
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  // ---------- State ----------
+  const state = {
+    routes: ["Rampara","Dhanmondi","Malibagh","NarayanGanj","Chashara","Gulshan"],
+    drivers: [
+      {route:"Rampara",name:"Kabir Hossain",phone:"017XXXXXXXX"},
+      {route:"Dhanmondi",name:"Shahin Alam",phone:"018XXXXXXXX"},
+      {route:"Malibagh",name:"Mizanur Rahman",phone:"019XXXXXXXX"}
+    ],
+    records: [] // student check-in
+  };
 
-    // ------------------ Init UI ------------------
-    const stuLocation = document.getElementById('stuLocation');
-    const assignRoute = document.getElementById('assignRoute');
-    const assignDriverSelect = document.getElementById('assignDriverSelect');
-    const totalStudentsInput = document.getElementById('totalStudents');
-    const seatsPerBusInput = document.getElementById('seatsPerBus');
-    const adminPasswordInput = document.getElementById('adminPassword');
+  // Populate driver table
+  function renderDriverTable(){
+    const tbody = document.querySelector("#driverTable tbody");
+    tbody.innerHTML="";
+    state.routes.forEach(r=>{
+      const d = state.drivers.find(d=>d.route===r);
+      const tr = document.createElement("tr");
+      tr.innerHTML=<td>${r}</td><td>${d?d.name:"Not Assigned"}</td><td>${d?d.phone:"-"}</td>;
+      tbody.appendChild(tr);
+    });
+  }
+  renderDriverTable();
 
-    function populateRoutes(){stuLocation.innerHTML='';assignRoute.innerHTML='';state.routes.forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;stuLocation.appendChild(o);const p=o.cloneNode(true);assignRoute.appendChild(p)})}
-    populateRoutes();
+  // Populate route select
+  const stuLocation = document.getElementById("stuLocation");
+  state.routes.forEach(r=>{const o=document.createElement("option");o.value=r;o.textContent=r;stuLocation.appendChild(o);});
 
-    // load config
-    totalStudentsInput.value = state.config.totalStudents||500;seatsPerBusInput.value=state.config.seatsPerBus||30;adminPasswordInput.value=state.config.adminPassword||'demo123';
+  // Student Check-in Submit
+  document.getElementById("submitCheckin").addEventListener("click",()=>{
+    const name=document.getElementById("stuName").value.trim();
+    const id=document.getElementById("stuId").value.trim();
+    const role=document.getElementById("stuRole").value.trim();
+    const loc=document.getElementById("stuLocation").value;
+    const hour=new Date().getHours();
+    if(hour<17 || hour>=22){alert("Submit between 5 PM – 10 PM"); return;}
+    if(!name||!id||!role){alert("সব তথ্য পূরণ করুন");return;}
+    state.records.push({name,id,role,loc,status:"Pending"});
+    document.getElementById("studentMsg").textContent="আপনার রিকোয়েস্ট রেকর্ড হয়েছে।";
+    document.getElementById("stuName").value=""; document.getElementById("stuId").value=""; document.getElementById("stuRole").value="";
+    renderApprovalList();
+  });
 
-    document.getElementById('saveConfig').addEventListener('click',()=>{state.config.totalStudents=Number(totalStudentsInput.value)||0;state.config.seatsPerBus=Number(seatsPerBusInput.value)||30;state.config.adminPassword=adminPasswordInput.value||'demo123';saveState();alert('Saved config locally.');renderAdmin();})
-    document.getElementById('resetData').addEventListener('click',()=>{if(!confirm('Reset all demo data?'))return;state={records:[],config:{totalStudents:500,seatsPerBus:30,adminPassword:'demo123'},routes:defaultRoutes,drivers:[],assignments:[],eventMultiplier:1};saveState();populateRoutes();renderAdmin();alert('Demo data reset.');})
+  // Attendance Approval List (Yes/No)
+  function renderApprovalList(){
+    const container=document.getElementById("approvalList");
+    container.innerHTML="";
+    state.records.forEach((r,i)=>{
+      if(r.status==="Pending"){
+        const div=document.createElement("div");
+        div.style.marginBottom="6px";
+        div.innerHTML=`${r.name} (${r.id}) — ${r.role}, ${r.loc} 
+          <button class="btn" style="margin-left:6px" onclick="approve(${i})">Yes</button>
+          <button class="btn ghost" style="margin-left:4px" onclick="reject(${i})">No</button>`;
+        container.appendChild(div);
+      }
+    });
+  }
+  window.approve=function(i){state.records[i].status="Approved";renderApprovalList();}
+  window.reject=function(i){state.records[i].status="Rejected";renderApprovalList();}
 
-    // ------------------ Student check-in ------------------
-    document.getElementById('addRecord').addEventListener('click',()=>{const name=document.getElementById('stuName').value.trim();const sid=document.getElementById('stuId').value.trim();const loc=document.getElementById('stuLocation').value;const will=document.getElementById('willCome').value;if(!sid||!name){const m=document.getElementById('studentMsg');m.style.color='crimson';m.textContent='অনুগ্রহ করে নাম ও আইডি/মোবাইল দিন';return}const now=new Date();const cutoffHour=22;const hour=now.getHours();const studentMsg=document.getElementById('studentMsg');if(hour>=cutoffHour){studentMsg.style.color='orange';studentMsg.textContent='নোট: কাট-অফ সময় পেরিয়েছে; প্রশাসন পরিবর্তন করতে পারেন।';}else{studentMsg.style.color='green';studentMsg.textContent='ধন্যবাদ — আপনার উত্তর রেকর্ড করা হয়েছে।'}const todayKey=new Date().toISOString().slice(0,10);const recIndex=state.records.findIndex(r=>r.date===todayKey&&r.sid===sid);const rec={date:todayKey,name,sid,loc,will};if(recIndex>=0)state.records[recIndex]=rec;else state.records.push(rec);saveState();renderAdmin();document.getElementById('stuName').value='';document.getElementById('stuId').value='';})
-
-    // ------------------ QR generation (uses Google Chart API image) ------------------
-    function makeQrUrl(data,size){const encoded=encodeURIComponent(String(data));return https://chart.googleapis.com/chart?cht=qr&chs=${size}x${size}&chl=${encoded}&choe=UTF-8;}
-    document.getElementById('generateQR').addEventListener('click',()=>{const link=document.getElementById('downloadLink').value.trim()||'eu-transport.html';const size=Number(document.getElementById('qrSize').value)||200;const url=makeQrUrl(link,size);const img=document.getElementById('qrImage');img.src=url;img.dataset.link=link;});
-    document.getElementById('downloadQR').addEventListener('click',()=>{const img=document.getElementById('qrImage');if(!img.src){alert('প্রথমে QR তৈরি করুন');return}const a=document.createElement('a');a.href=img.src;a.download='eu-transport-qr.png';a.click();})
-
-    // ------------------ Admin login ------------------
-    document.getElementById('adminLogin').addEventListener('click',()=>{const pass=document.getElementById('adminPass').value;if(pass===state.config.adminPassword){document.getElementById('adminPanel').style.display='block';document.getElementById('adminLoginCard').style.display='none';renderAdmin();}else{document.getElementById('adminLoginMsg').textContent='Password mismatch (demo)';}})
-    document.getElementById('logout').addEventListener('click',()=>{document.getElementById('adminPanel').style.display='none';document.getElementById('adminLoginCard').style.display='block';})
-
-    // ------------------ Admin render ------------------
-    function renderAdmin(){const todayKey=new Date().toISOString().slice(0,10);const recsToday=state.records.filter(r=>r.date===todayKey&&r.will==='yes');const totalComing=recsToday.length;document.getElementById('totalEnrolled').textContent=state.config.totalStudents||0;document.getElementById('totalComing').textContent=totalComing;const seats=state.config.seatsPerBus||30;const buses=Math.ceil((totalComing*(state.eventMultiplier||1))/seats);document.getElementById('busesNeeded').textContent=buses;const tbody=document.querySelector('#locationTable tbody');tbody.innerHTML='';state.routes.forEach(loc=>{const count=recsToday.filter(r=>r.loc===loc).length;const locBuses=Math.ceil((count*(state.eventMultiplier||1))/seats);const tr=document.createElement('tr');tr.innerHTML=<td>${loc}</td><td class="right">${count}</td><td class="right">${locBuses}</td>;tbody.appendChild(tr);});
-
-      // drivers
-      const dtbody=document.querySelector('#driversTable tbody');dtbody.innerHTML='';state.drivers.forEach((d,idx)=>{const tr=document.createElement('tr');tr.innerHTML=<td>${d.name}</td><td>${d.phone}</td><td>${d.type}</td><td><button data-idx="${idx}" class="btn ghost delDriver">Delete</button></td>;dtbody.appendChild(tr)});
-      // driver select
-      assignDriverSelect.innerHTML='';state.drivers.forEach((d,idx)=>{const o=document.createElement('option');o.value=idx;o.textContent=${d.name} — ${d.phone} (${d.type});assignDriverSelect.appendChild(o)});
-      // assignments
-      const atbody=document.querySelector('#assignmentsTable tbody');atbody.innerHTML='';state.assignments.forEach((a,idx)=>{const tr=document.createElement('tr');tr.innerHTML=<td>${a.date}</td><td>${a.route}</td><td>${a.driverName}</td><td>${a.driverPhone}</td><td><button data-idx="${idx}" class="btn ghost delAssign">Delete</button></td>;atbody.appendChild(tr)});
-
-      // delete handlers
-      document.querySelectorAll('.delDriver').forEach(btn=>btn.addEventListener('click',e=>{const i=Number(e.currentTarget.dataset.idx);if(confirm('Delete driver?')){state.drivers.splice(i,1);saveState();renderAdmin();}}));
-      document.querySelectorAll('.delAssign').forEach(btn=>btn.addEventListener('click',e=>{const i=Number(e.currentTarget.dataset.idx);if(confirm('Delete assignment?')){state.assignments.splice(i,1);saveState();renderAdmin();}}));
-    }
-
-    // ------------------ Drivers: pool & assign ------------------
-    document.getElementById('addDriver').addEventListener('click',()=>{const name=document.getElementById('driverName').value.trim();const phone=document.getElementById('driverPhone').value.trim();const type=document.getElementById('driverType').value;if(!name||!phone){alert('Driver name & phone দিন');return}state.drivers.push({name,phone,type});document.getElementById('driverName').value='';document.getElementById('driverPhone').value='';saveState();renderAdmin();})
-    document.getElementById('assignDriverBtn').addEventListener('click',()=>{const date=document.getElementById('assignDate').value;const route=document.getElementById('assignRoute').value;const idx=Number(assignDriverSelect.value);if(!date||!route||Number.isNaN(idx)){alert('Date, route, driver select করুন');return}const d=state.drivers[idx];state.assignments.push({date,route,driverName:d.name,driverPhone:d.phone});saveState();renderAdmin();})
-
-    // multiplier & export
-    document.getElementById('applyMultiplier').addEventListener('click',()=>{const v=Number(document.getElementById('eventMultiplier').value)||1;state.eventMultiplier=v;saveState();renderAdmin();alert('Multiplier applied');})
-    document.getElementById('exportCSV').addEventListener('click',()=>{const rows=[['date','sid','name','location','will']];state.records.forEach(r=>rows.push([r.date,r.sid,r.name,r.loc,r.will]));const csv=rows.map(r=>r.map(c=>"${String(c).replace(/"/g,'""')}").join(',')).join('
-');const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='eu_transport_records.csv';a.click();URL.revokeObjectURL(url);})
-
-    // ------------------ QR Scanner (BarcodeDetector) ------------------
-    let videoStream=null;let barcodeDetector=null;let scanning=false;let detectedSet=new Set();
-    const qrVideo=document.getElementById('qrVideo');
-    async function startScanner(){document.getElementById('scanStatus').textContent='Starting camera...';if('BarcodeDetector' in window){const formats=['qr_code'];barcodeDetector=new BarcodeDetector({formats});try{videoStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});qrVideo.srcObject=videoStream;qrVideo.style.display='block';scanning=true;detectLoop();document.getElementById('scanStatus').textContent='Scanning...';}catch(err){document.getElementById('scanStatus').textContent='Camera permission denied or device has no camera.'}}else{document.getElementById('scanStatus').textContent='Browser does not support BarcodeDetector API. Use external QR app and record ID manually.'}}
-    async function detectLoop(){if(!scanning) return;try{const bitmap=new ImageCapture(videoStream.getVideoTracks()[0]).grabFrame();const results=await barcodeDetector.detect(bitmap);for(const r of results){const raw=r.rawValue;handleDetected(raw)} }catch(e){/* ignore frame errors */}requestAnimationFrame(detectLoop);}    
-    function handleDetected(value){const todayKey=new Date().toISOString().slice(0,10);if(detectedSet.has(value)) return;detectedSet.add(value);document.getElementById('detectedList').textContent=detectedSet.size; // mark attendance: if value is student id or link containing id -> try parse
-      // simple handling: if value equals student id, mark present
-      const sid = value.split('?id=')[1] || value; // support urls like ...?id=123
-      // find today's record
-      const recIndex = state.records.findIndex(r=>r.date===todayKey && r.sid===sid);
-      if(recIndex>=0){state.records[recIndex].present = true;saveState();renderAdmin();}
-    }
-    document.getElementById('startScan').addEventListener('click',()=>{if(scanning){alert('Already scanning');return}startScanner();});
-    document.getElementById('stopScan').addEventListener('click',()=>{if(videoStream){videoStream.getTracks().forEach(t=>t.stop());videoStream=null;}scanning=false;document.getElementById('qrVideo').style.display='none';document.getElementById('scanStatus').textContent='Stopped.';detectedSet.clear();document.getElementById('detectedList').textContent='0';});
-
-    // ------------------ initial render ------------------
-    renderAdmin();
-
-    // ------------------ Helpful notes for admin when using QR for downloads ------------------
-    // 1) If you plan to share the HTML file directly (eu-transport.html), students must receive the file (e.g., via Google Drive link or hosting).
-    // 2) For QR open/download convenience: host eu-transport.html on a public URL (GitHub Pages or Firebase) and use that HTTPS URL in Download Link.
-    // 3) This demo uses Google Chart API to create QR images. If you prefer offline QR generation, replace makeQrUrl with a local QR library.
-
-  </script></body>
+  // Download Driver List as PDF
+  document.getElementById("downloadDrivers").addEventListener("click",()=>{
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Eastern University Transport — Driver List",14,20);
+    doc.setFontSize(12);
+    let y=30;
+    state.routes.forEach(r=>{
+      const d = state.drivers.find(d=>d.route===r);
+      const driverName = d?d.name:"Not Assigned";
+      const phone = d?d.phone:"-";
+      doc.text(Route: ${r} — Driver: ${driverName} — Phone: ${phone},14,y);
+      y+=10;
+      if(y>280){doc.addPage();y=20;}
+    });
+    doc.save("driver_list.pdf");
+  });
+</script>
+</body>
 </html>
