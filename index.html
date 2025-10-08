@@ -3,56 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eastern University Transport — Full Dashboard</title>
+<title>Eastern University Transport — Dashboard</title>
 <style>
-  :root{--bg:#f5f7fb;--card:#ffffff;--muted:#475569;--accent:#0b5cff}
-  body{font-family:Arial,sans-serif;margin:0;background:var(--bg);color:#0b1220}
-  .container{max-width:980px;margin:18px auto;padding:12px}
-  header{display:flex;gap:12px;align-items:center;margin-bottom:20px}
-  .logo{width:80px;height:80px;border-radius:12px;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:24px}
-  h1{margin:0;font-size:22px}
-  .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.06);margin-bottom:20px}
-  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-  input,select,button,textarea{font-size:15px;padding:10px;border-radius:8px;border:1px solid #e6eef6;width:100%;box-sizing:border-box}
-  .grid{display:grid;gap:12px}
-  .cols-3{grid-template-columns:repeat(3,1fr)}
-  .small{font-size:13px;color:var(--muted)}
-  .chip{display:inline-block;padding:6px 8px;border-radius:10px;background:#f8fafc;border:1px solid #eef2ff;margin-right:6px}
-  table{width:100%;border-collapse:collapse;margin-top:10px}
-  th,td{padding:8px;border-bottom:1px solid #f1f5f9;text-align:left}
-  .right{text-align:right}
-  .btn{background:var(--accent);color:white;border:none;padding:10px 12px;border-radius:8px;cursor:pointer}
-  .btn.ghost{background:transparent;color:var(--accent);border:1px solid #dbeafe}
-  footer{margin-top:18px;font-size:13px;color:var(--muted)}
-  .row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
-  .profile{display:flex;gap:12px;align-items:center;margin-top:10px}
-  .profile img{width:60px;height:60px;border-radius:50%;border:1px solid #e6eef6}
+  :root {
+    --bg: #f0f4f8;
+    --card: #ffffff;
+    --muted: #475569;
+    --accent: #0b5cff;
+    --accent2: #ff5722;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: var(--bg);
+    color: #0b1220;
+  }
+  .container {
+    max-width: 980px;
+    margin: 18px auto;
+    padding: 12px;
+  }
+  header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    background: var(--accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 24px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 22px;
+    color: var(--accent2);
+  }
+  .card {
+    background: var(--card);
+    padding: 14px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  input, select, button, textarea {
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #e6eef6;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .grid {
+    display: grid;
+    gap: 12px;
+  }
+  .cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .small {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .chip {
+    display: inline-block;
+    padding: 6px 8px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    margin-right: 6px;
+    font-weight: bold;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  th, td {
+    padding: 8px;
+    border-bottom: 1px solid #f1f5f9;
+    text-align: left;
+  }
+  th {
+    background: var(--accent);
+    color: white;
+  }
+  .right {
+    text-align: right;
+  }
+  .btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .btn.ghost {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid #dbeafe;
+  }
+  footer {
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .profile {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .profile img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    object-fit: cover;
+  }
 </style>
 </head>
 <body>
 <div class="container">
+  <!-- Header -->
   <header>
-     <img src="eu.jpeg" alt="Eastern University">
+    <img src="eu.jpeg" alt="Eastern University" class="logo">
     <div>
       <h1>Eastern University Transport</h1>
-      <div class="small">only transport related information</div>
+      <div class="small">Transport related information & dashboard</div>
     </div>
   </header>
-/* Profile / Team Section */
-#profile {
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  padding: 20px;
-  border-radius: 12px;
-  color: #fff;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-#profile h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 28px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-}
+
   <!-- Profile Section -->
   <div class="card">
     <h3>Transport Department Profiles</h3>
@@ -74,10 +169,10 @@
     </div>
   </div>
 
-  <!-- Configured Routes -->
+  <!-- Routes & Drivers -->
   <div class="card">
     <h3>Configured Routes & Drivers</h3>
-    <div style="margin-top:6px">
+    <div>
       <span class="chip">Rampara</span>
       <span class="chip">Dhanmondi</span>
       <span class="chip">Malibagh</span>
@@ -94,7 +189,7 @@
     <button class="btn" id="downloadDrivers">ড্রাইভার লিস্ট PDF ডাউনলোড</button>
   </div>
 
-  <!-- Student Check-in -->
+  <!-- Student / Faculty Check-in -->
   <div class="card">
     <h3>Student / Faculty Check-in</h3>
     <div class="small">Submit between 5 PM – 10 PM</div>
@@ -124,7 +219,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-  // ---------- State ----------
   const state = {
     routes: ["Rampara","Dhanmondi","Malibagh","NarayanGanj","Chashara","Gulshan"],
     drivers: [
@@ -132,7 +226,7 @@
       {route:"Dhanmondi",name:"Shahin Alam",phone:"018XXXXXXXX"},
       {route:"Malibagh",name:"Mizanur Rahman",phone:"019XXXXXXXX"}
     ],
-    records: [] // student check-in
+    records: [] 
   };
 
   // Populate driver table
@@ -150,32 +244,39 @@
 
   // Populate route select
   const stuLocation = document.getElementById("stuLocation");
-  state.routes.forEach(r=>{const o=document.createElement("option");o.value=r;o.textContent=r;stuLocation.appendChild(o);});
+  state.routes.forEach(r=>{
+    const o = document.createElement("option");
+    o.value = r;
+    o.textContent = r;
+    stuLocation.appendChild(o);
+  });
 
-  // Student Check-in Submit
+  // Student check-in
   document.getElementById("submitCheckin").addEventListener("click",()=>{
-    const name=document.getElementById("stuName").value.trim();
-    const id=document.getElementById("stuId").value.trim();
-    const role=document.getElementById("stuRole").value.trim();
-    const loc=document.getElementById("stuLocation").value;
-    const hour=new Date().getHours();
+    const name = document.getElementById("stuName").value.trim();
+    const id = document.getElementById("stuId").value.trim();
+    const role = document.getElementById("stuRole").value.trim();
+    const loc = document.getElementById("stuLocation").value;
+    const hour = new Date().getHours();
     if(hour<17 || hour>=22){alert("Submit between 5 PM – 10 PM"); return;}
     if(!name||!id||!role){alert("সব তথ্য পূরণ করুন");return;}
     state.records.push({name,id,role,loc,status:"Pending"});
     document.getElementById("studentMsg").textContent="আপনার রিকোয়েস্ট রেকর্ড হয়েছে।";
-    document.getElementById("stuName").value=""; document.getElementById("stuId").value=""; document.getElementById("stuRole").value="";
+    document.getElementById("stuName").value="";
+    document.getElementById("stuId").value="";
+    document.getElementById("stuRole").value="";
     renderApprovalList();
   });
 
-  // Attendance Approval List (Yes/No)
+  // Approval list
   function renderApprovalList(){
-    const container=document.getElementById("approvalList");
+    const container = document.getElementById("approvalList");
     container.innerHTML="";
     state.records.forEach((r,i)=>{
       if(r.status==="Pending"){
-        const div=document.createElement("div");
+        const div = document.createElement("div");
         div.style.marginBottom="6px";
-        div.innerHTML=`${r.name} (${r.id}) — ${r.role}, ${r.loc} 
+        div.innerHTML = `${r.name} (${r.id}) — ${r.role}, ${r.loc} 
           <button class="btn" style="margin-left:6px" onclick="approve(${i})">Yes</button>
           <button class="btn ghost" style="margin-left:4px" onclick="reject(${i})">No</button>`;
         container.appendChild(div);
