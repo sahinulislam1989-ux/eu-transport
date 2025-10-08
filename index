@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eastern University Transport</title>
+<style>
+body { font-family: Arial, sans-serif; margin:20px; background:#f5f5f5; }
+h2 { color:#2c3e50; }
+section { background:#fff; padding:15px; margin-bottom:20px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+table { width:100%; border-collapse: collapse; margin-top:10px;}
+table, th, td { border:1px solid #ccc; }
+th, td { padding:8px; text-align:center;}
+button { padding:8px 12px; margin:5px; border:none; border-radius:5px; cursor:pointer;}
+button:hover { opacity:0.8;}
+#message { margin-top:10px; color:green; font-weight:bold;}
+</style>
+</head>
+<body>
+
+<!-- Section 1: About -->
+<section id="about">
+  <h2>About Eastern University Transport</h2>
+  <p><strong>Assistant Director of Transport:</strong> Md. Sahihen | Mobile: 01962419405</p>
+  <p><strong>In-charge of Transport:</strong> Mizanur Rahman | Mobile: 01911090134</p>
+</section>
+
+<!-- Section 2: Driver & Route Management -->
+<section id="driver-panel">
+  <h2>Driver & Route Assignment</h2>
+  <button onclick="addDriver()">Add New Driver</button>
+  <table id="driver-table">
+    <thead>
+      <tr><th>Name</th><th>Phone</th><th>Route</th><th>Status</th><th>Actions</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<!-- Section 3: Student Panel -->
+<section id="student-panel">
+  <h2>Student Bus Attendance</h2>
+  <form id="student-form">
+    <input type="text" id="student-name" placeholder="Name" required>
+    <input type="text" id="student-id" placeholder="ID" required>
+    <input type="text" id="student-route" placeholder="Route" required>
+    <button type="submit">আমি গাড়িতে উঠেছি</button>
+  </form>
+  <div id="message"></div>
+  <p><small>Request Window: 5 PM – 10 PM</small></p>
+</section>
+
+<!-- Section 4: Admin Panel -->
+<section id="admin-panel">
+  <h2>Today's Attendance</h2>
+  <table id="attendance-table">
+    <thead>
+      <tr><th>Name</th><th>ID</th><th>Route</th><th>Status</th><th>Time</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <p>Total On Bus: <span id="total-count">0</span></p>
+  <button onclick="exportCSV()">Export CSV</button>
+</section>
+
+<!-- Section 5: Route-wise Forecast -->
+<section id="forecast-panel">
+  <h2>Route-wise Forecast for Next Day</h2>
+  <table id="forecast-table">
+    <thead>
+      <tr><th>Route</th><th>Total Passengers</th><th>Driver Assigned</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<script>
+// Local Storage Arrays
+let drivers = JSON.parse(localStorage.getItem('drivers')) || [];
+let attendance = JSON.parse(localStorage.getItem('attendance')) || [];
+
+// Utility: Check request window (5 PM - 10 PM)
+function isRequestAllowed() {
+  const now = new Date();
+  const hour = now.getHours();
+  return (hour >= 17 && hour < 22);
+}
+
+// Add Driver
+function addDriver() {
+  const name = prompt("Driver Name:");
+  const phone = prompt("Phone Number:");
+  const route = prompt("Route:");
+  if(name && phone && route) {
+    drivers.push({name, phone, route, status:"Active"});
+    localStorage.setItem('drivers', JSON.stringify(drivers));
+    updateDriverTable();
+  }
+}
+
+// Update Driver Table
+function updateDriverTable() {
+  const tbody = document.querySelector('#driver-table tbody');
+  tbody.innerHTML = '';
+  drivers.forEach((d,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${d.name}</td><td>${d.phone}</td><td>${d.route}</td><td>${d.status}</td>
+      <td><button onclick="editDriver(${i})">Edit</button><button onclick="deleteDriver(${i})">Delete</button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// Edit/Delete Driver
+function editDriver(i){
+  const name = prompt("Driver Name:", drivers[i].name);
+  const phone = prompt("Phone Number:", drivers[i].phone);
+  const route = prompt("Route:", drivers[i].route);
+  if(name && phone && route){
+    drivers[i] = {name, phone, route, status:"Active"};
+    localStorage.setItem('drivers', JSON.stringify(drivers));
+    updateDriverTable();
+  }
+}
+function deleteDriver(i){
+  if(confirm("Are you sure?")){
+    drivers.splice(i,1);
+    localStorage.setItem('drivers', JSON.stringify(drivers));
+    updateDriverTable();
+  }
+}
+
+// Student Submit
+document.getElementById('student-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  if(!isRequestAllowed()){
+    alert("Request window closed. Please submit between 5 PM and 10 PM.");
+    return;
+  }
+  const name = document.getElementById('student-name').value;
+  const id = document.getElementById('student-id').value;
+  const route = document.getElementById('student-route').value;
+  const time = new Date().toLocaleTimeString();
+  attendance.push({name,id,route,status:"On Bus",time});
+  localStorage.setItem('attendance', JSON.stringify(attendance));
+  updateAttendanceTable();
+  document.getElementById('message').innerText = "Your bus attendance has been recorded";
+  this.reset();
+  updateForecastTable();
+});
+
+// Update Attendance Table
+function updateAttendanceTable(){
+  const tbody = document.querySelector('#attendance-table tbody');
+  tbody.innerHTML='';
+  attendance.forEach(s=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = <td>${s.name}</td><td>${s.id}</td><td>${s.route}</td><td>${s.status}</td><td>${s.time}</td>;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('total-count').innerText = attendance.length;
+}
+
+// Route-wise Forecast
+function updateForecastTable(){
+  const tbody = document.querySelector('#forecast-table tbody');
+  tbody.innerHTML='';
+  const routeMap = {};
+  attendance.forEach(s=>{
+    if(routeMap[s.route]) routeMap[s.route]++;
+    else routeMap[s.route]=1;
+  });
+  for(let route in routeMap){
+    const driver = drivers.find(d=>d.route===route);
+    const tr = document.createElement('tr');
+    tr.innerHTML = <td>${route}</td><td>${routeMap[route]}</td><td>${driver?driver.name:"Not Assigned"}</td>;
+    tbody.appendChild(tr);
+  }
+}
+
+// CSV Export
+function exportCSV(){
+  let csv = 'Name,ID,Route,Status,Time\n';
+  attendance.forEach(s=>{
+    csv+=${s.name},${s.id},${s.route},${s.status},${s.time}\n;
+  });
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='attendance.csv';a.click();
+}
+
+// Initialize
+updateDriverTable();
+updateAttendanceTable();
+updateForecastTable();
+</script>
+</body>
+</html>
