@@ -1,310 +1,488 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eastern University Transport — Dashboard</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Eastern University Transport — Daily Requests</title>
+<link rel="icon" href="" />
 <style>
-:root {
-  --bg: #f0f4f8;
-  --card: #ffffff;
-  --muted: #475569;
-  --accent: #0b5cff;
-  --accent2: #ff5722;
-  --approved: #28a745;
-  --rejected: #dc3545;
-  --pending: #ffc107;
-  --input-focus: #0b5cff;
+:root{
+  --bg:#f3f6fb; --card:#fff; --muted:#475569; --accent:#0b5cff; --accent2:#ff6b35;
+  --yes:#16a34a; --no:#dc2626; --pending:#f59e0b;
 }
-body {
-  font-family: Arial,sans-serif;
-  margin: 0;
-  background: var(--bg);
-  color: #0b1220;
-}
-.container {
-  max-width: 980px;
-  margin: 18px auto;
-  padding: 12px;
-}
-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-}
-.logo-wrapper {
-  text-align:center;
-}
-.logo {
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  background: var(--accent);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
-  font-size:36px;
-  color:white;
-  margin-bottom:8px;
-}
-.logo-text {
-  font-size:20px;
-  font-weight:bold;
-  color: var(--accent2);
-}
-.card {
-  background: var(--card);
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(2,6,23,0.06);
-  margin-bottom: 20px;
-}
-h1,h3 { margin:0; }
-h3 { margin-bottom:12px; }
-label { display:block; font-size:13px; color: var(--muted); margin-bottom:6px;}
-input, select, button, textarea {
-  font-size:15px; padding:10px; border-radius:8px;
-  border:1px solid #e6eef6; width:100%; box-sizing:border-box;
-  transition: all 0.2s ease;
-}
-input:focus, select:focus, textarea:focus {
-  border-color: var(--input-focus);
-  box-shadow: 0 0 5px rgba(11,92,255,0.4);
-  outline:none;
-}
-.grid { display:grid; gap:12px; }
-.cols-3 { grid-template-columns: repeat(3,1fr); }
-.small { font-size:13px; color:var(--muted);}
-.chip {
-  display:inline-block;
-  padding:6px 8px;
-  border-radius:10px;
-  background: linear-gradient(135deg,#6a11cb,#2575fc);
-  color:#fff;
-  margin-right:6px;
-  font-weight:bold;
-}
-table { width:100%; border-collapse:collapse; margin-top:10px;}
-th, td { padding:8px; border-bottom:1px solid #f1f5f9; text-align:left; }
-th { background: var(--accent); color:white; }
-.btn {
-  background: var(--accent);
-  color:white;
-  border:none;
-  padding:10px 12px;
-  border-radius:8px;
-  cursor:pointer;
-  transition: all 0.2s ease;
-}
-.btn:hover { background: #0940b5; }
-.btn.ghost {
-  background: transparent;
-  color: var(--accent);
-  border:1px solid #dbeafe;
-}
-footer { margin-top:18px; font-size:13px; color: var(--muted);}
-.profile { display:flex; gap:12px; align-items:center; margin-top:10px;}
-.profile img { width:60px; height:60px; border-radius:50%; border:2px solid #fff; object-fit:cover; }
-.status-label { font-weight:bold; padding:3px 6px; border-radius:6px; color:white;}
-.status-approved { background: var(--approved);}
-.status-rejected { background: var(--rejected);}
-.status-pending { background: var(--pending);}
-.card-checkin { background: linear-gradient(135deg,#6a11cb,#2575fc); color:white; }
-.card-checkin input, .card-checkin select {
-  background:white;
-  color:#0b1220;
-}
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);margin:0;color:#0b1220}
+.container{max-width:1100px;margin:18px auto;padding:16px}
+.header{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:18px}
+.logo-circle{width:140px;height:140px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6a11cb,#2575fc);color:#fff;font-weight:800;font-size:36px;box-shadow:0 8px 24px rgba(37,117,252,0.16)}
+.logo-title{font-size:20px;color:var(--accent2);font-weight:700}
+.card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.06);margin-bottom:16px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.col{flex:1;min-width:260px}
+.small{font-size:13px;color:var(--muted)}
+.profile{display:flex;gap:12px;align-items:center;margin-top:10px}
+.profile img{width:72px;height:72px;border-radius:12px;object-fit:cover;border:3px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+.grid{display:grid;gap:10px}
+.cols-3{grid-template-columns:repeat(3,1fr)}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+input,select,button,textarea{font-size:15px;padding:10px;border-radius:8px;border:1px solid #e6eef6;width:100%}
+button{cursor:pointer}
+.btn-primary{background:var(--accent);color:#fff;border:none;padding:10px 12px;border-radius:8px}
+.btn-ghost{background:transparent;border:1px solid #dbeafe;color:var(--accent);padding:10px 12px;border-radius:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:linear-gradient(135deg,#6a11cb,#2575fc);color:#fff;padding:6px 10px;border-radius:999px;font-weight:700}
+.table{width:100%;border-collapse:collapse;margin-top:10px}
+.table th{background:var(--accent);color:#fff;padding:10px;text-align:left}
+.table td{padding:8px;border-bottom:1px solid #f1f5f9}
+.status{display:inline-block;padding:4px 8px;border-radius:8px;color:#fff;font-weight:700}
+.status.pending{background:var(--pending)}
+.status.yes{background:var(--yes)}
+.status.no{background:var(--no)}
+.summary-card{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.summary-item{background:linear-gradient(135deg,#ffffff,#f8fafc);padding:12px;border-radius:10px;min-width:150px;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
+.footer{margin-top:10px;font-size:13px;color:var(--muted);text-align:center}
+.input-focus{box-shadow:0 0 8px rgba(11,92,255,0.12);border-color:var(--accent) !important}
+@media(max-width:720px){.cols-3{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="container">
 
-<!-- Header -->
-<header>
-  <div class="logo-wrapper">
-    <div class="logo">EU</div>
-    <div class="logo-text">Eastern University</div>
+  <!-- HEADER / BIG LOGO -->
+  <div class="header">
+    <div class="logo-circle" id="logoDisplay">EU</div>
+    <div class="logo-title">Eastern University</div>
+    <div class="small">Daily transport request & boarding tracker — submit between 5 PM and 10 PM</div>
   </div>
-</header>
-<!-- Profiles -->
-<div class="card">
-  <h3>Transport Department Profiles</h3>
-  <div class="profile">
-    <img src="profile.jpeg" alt="Md. Sahihen">
-    <div>
-      <strong>Md. Sahihen</strong><br>
-      Assistant Director of Transport<br>
-      Mobile: 01962419405
+
+  <!-- PROFILES -->
+  <div class="card" id="profilesCard">
+    <h3 style="margin:0 0 8px 0">Transport Team</h3>
+    <div class="row">
+      <div class="profile">
+        <img id="profileImg1" src="profile.jpeg" alt="Md. Sahihen">
+        <div>
+          <div style="font-weight:800">Md. Sahihen</div>
+          <div class="small">Assistant Director of Transport</div>
+          <div class="small">Mobile: 01962419405</div>
+        </div>
+      </div>
+
+      <div class="profile">
+        <img id="profileImg2" src="mizen.jpeg" alt="Mizanur Rahman">
+        <div>
+          <div style="font-weight:800">Mizanur Rahman</div>
+          <div class="small">Senior In-charge of Transport</div>
+          <div class="small">Mobile: 01911090134</div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="profile">
-    <img src="mizen.jpeg" alt="Mizanur Rahman">
-    <div>
-      <strong>Mizanur Rahman</strong><br>
-      Senior In-charge of Transport<br>
-      Mobile: 01911090134
+
+  <!-- CONFIG: seats per bus + drivers -->
+  <div class="card">
+    <div class="row">
+      <div class="col">
+        <label>Seats per bus / van</label>
+        <input id="seatsPerBus" type="number" min="1" value="30">
+        <div class="note">Use this to calculate how many vehicles needed per route (based on approved riders).</div>
+      </div>
+      <div class="col">
+        <label>Routes (editable)</label>
+        <textarea id="routesInput" rows="3" placeholder="One route per line (e.g. Rampara)"></textarea>
+        <div class="note">Edit route list here and click Update routes.</div>
+      </div>
+      <div class="col">
+        <label>Driver list (editable)</label>
+        <textarea id="driversInput" rows="3" placeholder="Format: Route|Driver Name|Phone (one per line)"></textarea>
+        <div class="note">Example: Rampara|Kabir Hossain|017xxxxxxxx</div>
+      </div>
+    </div>
+    <div style="margin-top:10px" class="row">
+      <button class="btn-primary" id="updateConfig">Update routes & drivers</button>
+      <button class="btn-ghost" id="resetData">Reset All Requests</button>
     </div>
   </div>
-</div>
 
-<!-- Routes & Drivers -->
-<div class="card">
-  <h3>Configured Routes & Drivers</h3>
-  <div>
-    <span class="chip">Rampara</span>
-    <span class="chip">Dhanmondi</span>
-    <span class="chip">Malibagh</span>
-    <span class="chip">NarayanGanj</span>
-    <span class="chip">Chashara</span>
-    <span class="chip">Gulshan</span>
-  </div>
-  <table id="driverTable">
-    <thead>
-      <tr><th>Route</th><th>Driver</th><th>Phone</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <button class="btn" id="downloadDrivers">ড্রাইভার লিস্ট PDF ডাউনলোড</button>
-</div>
-
-<!-- Student / Faculty Check-in -->
-<div class="card card-checkin">
-  <h3>Student / Faculty Check-in</h3>
-  <div class="small">Submit between 5 PM – 10 PM</div>
-  <div class="grid cols-3">
-    <div><label>নাম (Name)</label><input id="stuName" placeholder="Full Name"></div>
-    <div><label>ID / Mobile</label><input id="stuId" placeholder="ID or Phone"></div>
-    <div><label>পদবী (Designation)</label><input id="stuRole" placeholder="Student / Faculty"></div>
-    <div><label>Pickup Location</label>
-      <select id="stuLocation"></select>
-    </div>
-    <div><label>&nbsp;</label>
-      <button class="btn" id="submitCheckin">Submit</button>
+  <!-- ROUTE / DRIVER TABLE & PDF -->
+  <div class="card">
+    <h3 style="margin:0 0 8px 0">Routes & Drivers</h3>
+    <div class="chips" id="routesChips"></div>
+    <table class="table" id="driverTable">
+      <thead><tr><th>Route</th><th>Driver</th><th>Phone</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div style="margin-top:10px" class="row">
+      <button class="btn-primary" id="downloadDriversPdf">Download Driver List (PDF)</button>
+      <button class="btn-ghost" id="downloadDriversCsv">Download Driver CSV</button>
     </div>
   </div>
-  <div id="studentMsg" class="small" style="margin-top:8px;"></div>
+
+  <!-- CHECK-IN FORM (colorful) -->
+  <div class="card" id="checkinCard" style="background:linear-gradient(135deg,#6a11cb,#2575fc);color:#fff">
+    <h3 style="margin:0 0 8px 0">Student / Faculty — Coming Tomorrow (Request)</h3>
+    <div class="small" style="color:rgba(255,255,255,0.9)">Fill this between 5 PM and 10 PM. Pickup location is the stop/route name.</div>
+    <div class="grid cols-3" style="margin-top:10px">
+      <div>
+        <label style="color:#fff">নাম (Name)</label>
+        <input id="stuName" placeholder="Full name">
+      </div>
+      <div>
+        <label style="color:#fff">ID / Mobile</label>
+        <input id="stuId" placeholder="Student ID or Mobile">
+      </div>
+      <div>
+        <label style="color:#fff">পদবী (Designation)</label>
+        <input id="stuRole" placeholder="Student / Faculty / Officer">
+      </div>
+      <div>
+        <label style="color:#fff">Pickup Location</label>
+        <select id="stuLocation"></select>
+      </div>
+      <div>
+        <label style="color:#fff">Phone (optional)</label>
+        <input id="stuPhone" placeholder="Mobile number">
+      </div>
+      <div style="align-self:center">
+        <label style="color:transparent">submit</label>
+        <button class="btn-primary" id="submitReq">Send Request</button>
+      </div>
+    </div>
+    <div id="reqMsg" style="margin-top:10px;color:#e6ffed;font-weight:700"></div>
+  </div>
+
+  <!-- PENDING / BOARDING LIST -->
+  <div class="card">
+    <h3 style="margin:0 0 8px 0">Today's Requests & Boarding</h3>
+    <div class="small">After rider boards, click <strong>Yes</strong>. If not, click <strong>No</strong>.</div>
+    <table class="table" id="requestsTable">
+      <thead>
+        <tr><th>Time</th><th>Name</th><th>ID</th><th>Designation</th><th>Phone</th><th>Pickup</th><th>Status</th><th>Action</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div style="margin-top:10px" class="row">
+      <button class="btn-primary" id="exportPdf">Generate Final Report (PDF)</button>
+      <button class="btn-ghost" id="exportCsv">Download CSV</button>
+    </div>
+    <div class="note">Final report includes route-wise totals and full request list (Approved = boarded).</div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="card">
+    <h3 style="margin:0 0 8px 0">Route-wise Summary (Approved / Required vehicles)</h3>
+    <div id="summaryBoxes" class="summary-card"></div>
+    <div class="note">Counts show number of boarded (Yes). Use seats-per-bus to estimate how many vehicles needed.</div>
+  </div>
+
+  <div class="footer">Made for Eastern University Transport — Demo. Data stored locally in browser.</div>
 </div>
 
-<!-- Attendance / Approval -->
-<div class="card">
-  <h3>Attendance Approval</h3>
-  <div id="approvalList"></div>
-</div>
-
-<!-- Summary -->
-<div class="card">
-  <h3>Summary (Route-wise Passenger Count)</h3>
-  <div id="summaryList"></div>
-</div>
-
-</div>
-<footer class="small">Eastern University Transport Dashboard — Demo version</footer>
-
+<!-- jsPDF CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-const state = {
-  routes:["Rampara","Dhanmondi","Malibagh","NarayanGanj","Chashara","Gulshan"],
-  drivers:[
-    {route:"Rampara",name:"Kabir Hossain",phone:"017XXXXXXXX"},
-    {route:"Dhanmondi",name:"Shahin Alam",phone:"018XXXXXXXX"},
-    {route:"Malibagh",name:"Mizanur Rahman",phone:"019XXXXXXXX"}
-  ],
-  records:[]
-};
 
-// Driver Table
-function renderDriverTable(){
-  const tbody=document.querySelector("#driverTable tbody");
-  tbody.innerHTML="";
-  state.routes.forEach(r=>{
-    const d=state.drivers.find(d=>d.route===r);
-    const tr=document.createElement("tr");
-    tr.innerHTML=<td>${r}</td><td>${d?d.name:"Not Assigned"}</td><td>${d?d.phone:"-"}</td>;
-    tbody.appendChild(tr);
+<script>
+// ---------- State & storage ----------
+const STORAGE_KEY = 'eu_transport_requests_v1';
+let store = loadStore();
+function loadStore(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {
+    routes: ["Rampara","Dhanmondi","Malibagh","NarayanGanj","Chashara","Gulshan"],
+    drivers: [
+      {route:"Rampara",name:"Kabir Hossain",phone:"017XXXXXXXX"},
+      {route:"Dhanmondi",name:"Shahin Alam",phone:"018XXXXXXXX"},
+      {route:"Malibagh",name:"Mizanur Rahman",phone:"019XXXXXXXX"}
+    ],
+    seatsPerBus: 30,
+    requests: [] // {id, timeISO, name, sid, role, phone, pickup, status}
+  };
+}
+function saveStore(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }
+
+// ---------- UI helpers ----------
+const routesChips = document.getElementById('routesChips');
+const driverTableBody = document.querySelector('#driverTable tbody');
+const routesInput = document.getElementById('routesInput');
+const driversInput = document.getElementById('driversInput');
+const seatsPerBusInput = document.getElementById('seatsPerBus');
+const stuLocation = document.getElementById('stuLocation');
+const requestsTableBody = document.querySelector('#requestsTable tbody');
+const reqMsg = document.getElementById('reqMsg');
+const summaryBoxes = document.getElementById('summaryBoxes');
+const routesTextArea = routesInput;
+const driversTextArea = driversInput;
+
+// init UI from store
+function initUI(){
+  seatsPerBusInput.value = store.seatsPerBus || 30;
+  routesInput.value = store.routes.join('\\n');
+  driversInput.value = store.drivers.map(d=>${d.route}|${d.name}|${d.phone}).join('\\n');
+  renderRoutesDrivers();
+  renderRequestsTable();
+  renderSummary();
+}
+function renderRoutesDrivers(){
+  // chips
+  routesChips.innerHTML = '';
+  store.routes.forEach(r=>{
+    const s = document.createElement('div');
+    s.className='chip';
+    s.textContent = r;
+    routesChips.appendChild(s);
+  });
+  // driver table
+  driverTableBody.innerHTML = '';
+  store.routes.forEach(r=>{
+    const d = store.drivers.find(x=>x.route===r);
+    const tr = document.createElement('tr');
+    tr.innerHTML = <td>${r}</td><td>${d?escapeHtml(d.name):'<em>Not Assigned</em>'}</td><td>${d?escapeHtml(d.phone):'-'}</td>;
+    driverTableBody.appendChild(tr);
+  });
+  // pick list
+  stuLocation.innerHTML = '';
+  const opt0 = document.createElement('option'); opt0.value=''; opt0.textContent='-- Select pickup location --'; stuLocation.appendChild(opt0);
+  store.routes.forEach(r=>{
+    const o = document.createElement('option'); o.value = r; o.textContent = r; stuLocation.appendChild(o);
   });
 }
-renderDriverTable();
+function escapeHtml(s){ return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
 
-// Pickup Location select
-const stuLocation=document.getElementById("stuLocation");
-state.routes.forEach(r=>{
-  const o=document.createElement("option");
-  o.value=r; o.textContent=r;
-  stuLocation.appendChild(o);
+// ---------- Config update ----------
+document.getElementById('updateConfig').addEventListener('click', ()=>{
+  // routes
+  const routesText = routesInput.value.trim();
+  const newRoutes = routesText ? routesText.split('\\n').map(x=>x.trim()).filter(Boolean) : [];
+  // drivers parse
+  const driversLines = driversInput.value.trim().split('\\n').map(x=>x.trim()).filter(Boolean);
+  const newDrivers = driversLines.map(line=>{
+    const parts = line.split('|').map(p=>p.trim());
+    return {route:parts[0]||'', name:parts[1]||'Unknown', phone:parts[2]||''};
+  }).filter(d=>d.route);
+  if(newRoutes.length===0){ alert('At least one route required'); return;}
+  store.routes = newRoutes;
+  store.drivers = newDrivers;
+  store.seatsPerBus = Number(seatsPerBusInput.value) || store.seatsPerBus;
+  saveStore();
+  renderRoutesDrivers();
+  renderSummary();
+  alert('Routes and drivers updated');
 });
 
-// Check-in Submit
-document.getElementById("submitCheckin").addEventListener("click",()=>{
-  const name=document.getElementById("stuName").value.trim();
-  const id=document.getElementById("stuId").value.trim();
-  const role=document.getElementById("stuRole").value.trim();
-  const loc=document.getElementById("stuLocation").value;
-  const hour=new Date().getHours();
-  if(hour<17||hour>=22){ alert("Submit between 5 PM – 10 PM"); return;}
-  if(!name||!id||!role){ alert("সব তথ্য পূরণ করুন"); return;}
-  state.records.push({name,id,role,loc,status:"Pending"});
-  document.getElementById("studentMsg").textContent="আপনার রিকোয়েস্ট রেকর্ড হয়েছে।";
-  document.getElementById("stuName").value="";
-  document.getElementById("stuId").value="";
-  document.getElementById("stuRole").value="";
-  renderApprovalList();
+// reset data
+document.getElementById('resetData').addEventListener('click', ()=>{
+  if(!confirm('Reset all stored requests?')) return;
+  store.requests = [];
+  saveStore();
+  renderRequestsTable();
+  renderSummary();
+  alert('Requests reset');
+});
+
+// ---------- Submit request ----------
+document.getElementById('submitReq').addEventListener('click', ()=>{
+  const hour = new Date().getHours();
+  if(hour < 17 || hour >= 22){
+    reqMsg.style.color = '#ffdddd';
+    reqMsg.textContent = 'Request window closed — allowed between 5 PM and 10 PM';
+    return;
+  }
+  const name = document.getElementById('stuName').value.trim();
+  const sid = document.getElementById('stuId').value.trim();
+  const role = document.getElementById('stuRole').value.trim();
+  const phone = document.getElementById('stuPhone').value.trim();
+  const pickup = stuLocation.value;
+  if(!name || !sid || !role || !pickup){
+    reqMsg.style.color = '#ffdede';
+    reqMsg.textContent = 'সব তথ্য পূরণ করুন (Name, ID, Designation, Pickup)';
+    return;
+  }
+  const rec = {
+    id: 'r' + Date.now(),
+    timeISO: new Date().toISOString(),
+    name, sid, role, phone, pickup,
+    status: 'Pending'
+  };
+  store.requests.push(rec);
+  saveStore();
+  // success
+  reqMsg.style.color = '#eaffef';
+  reqMsg.textContent = 'আপনার রিকোয়েস্ট রেকর্ড হয়েছে — ধন্যবাদ';
+  // clear inputs
+  document.getElementById('stuName').value=''; document.getElementById('stuId').value=''; document.getElementById('stuRole').value=''; document.getElementById('stuPhone').value='';
+  renderRequestsTable();
   renderSummary();
 });
 
-// Approval List
-function renderApprovalList(){
-  const container=document.getElementById("approvalList");
-  container.innerHTML="";
-  state.records.forEach((r,i)=>{
-    if(r.status==="Pending"){
-      const div=document.createElement("div");
-      div.style.marginBottom="6px";
-      div.innerHTML=`${r.name} (${r.id}) — ${r.role}, ${r.loc} 
-        <button class="btn" style="margin-left:6px" onclick="approve(${i})">Yes</button>
-        <button class="btn ghost" style="margin-left:4px" onclick="reject(${i})">No</button>`;
-      container.appendChild(div);
-    } else {
-      const div=document.createElement("div");
-      const statusClass=r.status==="Approved"?"status-approved":"status-rejected";
-      div.innerHTML=${r.name} (${r.id}) — ${r.role}, ${r.loc} <span class="status-label ${statusClass}">${r.status}</span>;
-      container.appendChild(div);
-    }
+// ---------- Render requests table ----------
+function renderRequestsTable(){
+  requestsTableBody.innerHTML = '';
+  // sort today's requests by time descending (optionally)
+  const todayKey = (new Date()).toISOString().slice(0,10);
+  const todays = store.requests.filter(r=>r.timeISO.slice(0,10) === todayKey);
+  todays.slice().reverse().forEach(r=>{
+    const tr = document.createElement('tr');
+    const time = new Date(r.timeISO).toLocaleTimeString();
+    const statusLabel = (r.status === 'Pending') ? <span class="status pending">Pending</span>
+                      : (r.status === 'Approved') ? <span class="status yes">Yes</span>
+                      : <span class="status no">No</span>;
+    const action = (r.status === 'Pending') 
+      ? `<button class="btn-primary" onclick="markYes('${r.id}')">Yes</button>
+         <button class="btn-ghost" onclick="markNo('${r.id}')">No</button>`
+      : <button class="btn-ghost" onclick="undo('${r.id}')">Undo</button>;
+    tr.innerHTML = `<td>${time}</td>
+      <td>${escapeHtml(r.name)}</td>
+      <td>${escapeHtml(r.sid)}</td>
+      <td>${escapeHtml(r.role)}</td>
+      <td>${escapeHtml(r.phone||'-')}</td>
+      <td>${escapeHtml(r.pickup)}</td>
+      <td>${statusLabel}</td>
+      <td>${action}</td>`;
+    requestsTableBody.appendChild(tr);
   });
 }
-window.approve=function(i){state.records[i].status="Approved"; renderApprovalList(); renderSummary();}
-window.reject=function(i){state.records[i].status="Rejected"; renderApprovalList(); renderSummary();}
 
-// Route-wise summary
+// exposed functions for inline onclick
+window.markYes = function(id){
+  const idx = store.requests.findIndex(x=>x.id===id);
+  if(idx===-1) return;
+  store.requests[idx].status = 'Approved';
+  saveStore();
+  renderRequestsTable();
+  renderSummary();
+};
+window.markNo = function(id){
+  const idx = store.requests.findIndex(x=>x.id===id);
+  if(idx===-1) return;
+  store.requests[idx].status = 'No';
+  saveStore();
+  renderRequestsTable();
+  renderSummary();
+};
+window.undo = function(id){
+  const idx = store.requests.findIndex(x=>x.id===id);
+  if(idx===-1) return;
+  store.requests[idx].status = 'Pending';
+  saveStore();
+  renderRequestsTable();
+  renderSummary();
+};
+
+// ---------- Summary generation ----------
 function renderSummary(){
-  const container=document.getElementById("summaryList");
-  container.innerHTML="";
-  state.routes.forEach(r=>{
-    const count=state.records.filter(x=>x.loc===r && x.status==="Approved").length;
-    container.innerHTML+=<div>${r}: ${count} passengers</div>;
+  summaryBoxes.innerHTML = '';
+  const seats = Number(seatsPerBusInput.value) || store.seatsPerBus || 30;
+  store.routes.forEach(r=>{
+    const approvedCount = store.requests.filter(x=>x.pickup===r && x.status==='Approved').length;
+    const pendingCount = store.requests.filter(x=>x.pickup===r && x.status==='Pending').length;
+    const vehicles = Math.ceil(approvedCount / seats);
+    const div = document.createElement('div');
+    div.className = 'summary-item';
+    div.innerHTML = `<div style="font-weight:800">${escapeHtml(r)}</div>
+      <div class="small">Approved: <strong>${approvedCount}</strong></div>
+      <div class="small">Pending: <strong>${pendingCount}</strong></div>
+      <div class="small">Vehicles needed: <strong>${vehicles}</strong> (seats ${seats})</div>`;
+    summaryBoxes.appendChild(div);
   });
 }
-renderSummary();
 
-// Download driver list PDF
-document.getElementById("downloadDrivers").addEventListener("click",()=>{
+// ---------- Export PDF (final report) ----------
+document.getElementById('exportPdf').addEventListener('click', async ()=>{
   const { jsPDF } = window.jspdf;
-  const doc=new jsPDF();
+  const doc = new jsPDF({unit:'pt', format:'a4'});
+  const title = Eastern University Transport — Final Report (${(new Date()).toLocaleDateString()});
   doc.setFontSize(16);
-  doc.text("Eastern University Transport — Driver List",14,20);
+  doc.text(title, 40, 40);
   doc.setFontSize(12);
-  let y=30;
-  state.routes.forEach(r=>{
-    const d=state.drivers.find(d=>d.route===r);
-    const driverName=d?d.name:"Not Assigned";
-    const phone=d?d.phone:"-";
-    doc.text(Route: ${r} — Driver: ${driverName} — Phone: ${phone},14,y);
-    y+=10;
-    if(y>280){doc.addPage();y=20;}
+  // route-wise summary
+  let y = 70;
+  doc.text('Route-wise totals (Approved):', 40, y); y += 18;
+  const seats = Number(seatsPerBusInput.value) || store.seatsPerBus || 30;
+  store.routes.forEach(r=>{
+    const approved = store.requests.filter(x=>x.pickup===r && x.status==='Approved').length;
+    const vehicles = Math.ceil(approved / seats);
+    doc.text(${r}: ${approved} passengers — Vehicles needed: ${vehicles}, 60, y);
+    y += 16;
+    if(y > 740){ doc.addPage(); y = 40; }
   });
-  doc.save("driver_list.pdf");
+  y += 10;
+  doc.text('Full requests (today):', 40, y); y += 18;
+  const todayKey = (new Date()).toISOString().slice(0,10);
+  const todays = store.requests.filter(r=>r.timeISO.slice(0,10)===todayKey);
+  if(todays.length===0){
+    doc.text('No requests for today.', 60, y); y+=16;
+  } else {
+    // header
+    doc.setFontSize(10);
+    doc.text('Time',40,y); doc.text('Name',100,y); doc.text('ID',260,y); doc.text('Pickup',330,y); doc.text('Status',440,y);
+    y+=14;
+    todays.forEach(r=>{
+      const t = new Date(r.timeISO).toLocaleTimeString();
+      doc.text(t,40,y); doc.text(truncate(r.name,22),100,y); doc.text(truncate(r.sid,16),260,y); doc.text(truncate(r.pickup,20),330,y); doc.text(r.status,440,y);
+      y += 12;
+      if(y > 740){ doc.addPage(); y = 40; }
+    });
+  }
+  doc.save(eu_transport_report_${(new Date()).toISOString().slice(0,10)}.pdf);
 });
+function truncate(s, n){ return s.length>n? s.slice(0,n-1)+'…': s; }
+
+// ---------- Export CSV ----------
+document.getElementById('exportCsv').addEventListener('click', ()=>{
+  const rows = [['time','name','id','role','phone','pickup','status']];
+  const todayKey = (new Date()).toISOString().slice(0,10);
+  const todays = store.requests.filter(r=>r.timeISO.slice(0,10)===todayKey);
+  todays.forEach(r=> rows.push([r.timeISO, r.name, r.sid, r.role, r.phone||'', r.pickup, r.status]));
+  const csv = rows.map(r=> r.map(c=>"${String(c).replace(/"/g,'""')}").join(',')).join('\\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = eu_requests_${todayKey}.csv; a.click();
+  URL.revokeObjectURL(url);
+});
+
+// ---------- Drivers PDF & CSV ----------
+document.getElementById('downloadDriversPdf').addEventListener('click', ()=>{
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFontSize(14);
+  doc.text('Eastern University — Driver List', 14, 20);
+  doc.setFontSize(11);
+  let y = 36;
+  store.routes.forEach(r=>{
+    const d = store.drivers.find(x=>x.route===r);
+    const text = Route: ${r} — Driver: ${d?d.name:'Not Assigned'} — Phone: ${d?d.phone:'-'};
+    doc.text(text, 14, y);
+    y += 12;
+    if(y > 780){ doc.addPage(); y = 40; }
+  });
+  doc.save(eu_drivers_${(new Date()).toISOString().slice(0,10)}.pdf);
+});
+document.getElementById('downloadDriversCsv').addEventListener('click', ()=>{
+  const rows = [['route','driver','phone']];
+  store.routes.forEach(r=>{
+    const d = store.drivers.find(x=>x.route===r);
+    rows.push([r, d?d.name:'', d?d.phone:'']);
+  });
+  const csv = rows.map(r=> r.map(c=>"${String(c).replace(/"/g,'""')}").join(',')).join('\\n');
+  const blob = new Blob([csv], {type:'text/csv'}); const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download = eu_drivers.csv; a.click(); URL.revokeObjectURL(url);
+});
+
+// ---------- Utility: load on start ----------
+initUI();
+
+// ensure store persisted across seats change
+seatsPerBusInput.addEventListener('change', ()=>{
+  store.seatsPerBus = Number(seatsPerBusInput.value) || store.seatsPerBus;
+  saveStore();
+  renderSummary();
+});
+
 </script>
 </body>
 </html>
